@@ -4,8 +4,8 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import HeroSection from '../components/UI/HeroSection';
 import Features from '../components/UI/Features';
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
   Users, 
   Building2, 
@@ -155,22 +155,22 @@ const Index = () => {
                   className="animate-fade-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <Card variant="default" hoverable className="h-full">
-                    <Card.Content className="p-8">
+                  <CustomCard variant="default" hoverable className="h-full">
+                    <CustomCard.Content className="p-8">
                       <div className="bg-coffee-light/50 w-12 h-12 rounded-full flex items-center justify-center mb-6 text-coffee-dark">
                         {role.icon}
                       </div>
                       <h3 className="text-xl font-bold mb-3 text-coffee-dark">{role.title}</h3>
                       <p className="text-muted-foreground mb-6">{role.description}</p>
-                      <Button 
+                      <CustomButton 
                         variant="outline" 
                         className="mt-auto" 
                         icon={<ChevronRight className="h-4 w-4" />}
                       >
                         {role.cta}
-                      </Button>
-                    </Card.Content>
-                  </Card>
+                      </CustomButton>
+                    </CustomCard.Content>
+                  </CustomCard>
                 </div>
               ))}
             </div>
@@ -219,20 +219,20 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
+                <CustomButton 
                   variant="primary" 
                   size="lg" 
                   icon={<Gift className="h-5 w-5" />}
                 >
                   Send Your First Gift
-                </Button>
-                <Button 
+                </CustomButton>
+                <CustomButton 
                   variant="outline" 
                   size="lg" 
                   icon={<QrCode className="h-5 w-5" />}
                 >
                   Explore the Platform
-                </Button>
+                </CustomButton>
               </div>
             </div>
           </div>

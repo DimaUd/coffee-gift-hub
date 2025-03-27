@@ -11,7 +11,7 @@ interface CardProps {
   style?: React.CSSProperties;
 }
 
-const Card = ({
+const CustomCard = ({
   children,
   className,
   variant = 'default',
@@ -114,11 +114,11 @@ const CardFooter = ({
 );
 
 // Attach sub-components to the Card component
-Card.Header = CardHeader;
-Card.Title = CardTitle;
-Card.Description = CardDescription;
-Card.Content = CardContent;
-Card.Footer = CardFooter;
+CustomCard.Header = CardHeader;
+CustomCard.Title = CardTitle;
+CustomCard.Description = CardDescription;
+CustomCard.Content = CardContent;
+CustomCard.Footer = CardFooter;
 
-export default Card;
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };
+export default CustomCard;
+export { CustomCard, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };

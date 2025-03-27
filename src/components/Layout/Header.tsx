@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Coffee, ChevronDown } from 'lucide-react';
-import Button from '../UI/Button';
+import CustomButton from '../UI/CustomButton';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -96,12 +96,12 @@ const Header = () => {
         
         {/* Auth Buttons */}
         <div className="hidden md:flex items-center space-x-3">
-          <Button variant="ghost" size="sm">
+          <CustomButton variant="ghost" size="sm">
             Login
-          </Button>
-          <Button variant="primary" size="sm">
+          </CustomButton>
+          <CustomButton variant="primary" size="sm">
             Sign Up
-          </Button>
+          </CustomButton>
         </div>
         
         {/* Mobile Menu Button */}
@@ -153,12 +153,12 @@ const Header = () => {
             
             {/* Mobile Auth Buttons */}
             <div className="flex flex-col space-y-3 pt-4 border-t border-coffee-light">
-              <Button variant="outline" fullWidth>
+              <CustomButton variant="outline" fullWidth>
                 Login
-              </Button>
-              <Button variant="primary" fullWidth>
+              </CustomButton>
+              <CustomButton variant="primary" fullWidth>
                 Sign Up
-              </Button>
+              </CustomButton>
             </div>
           </div>
         </div>

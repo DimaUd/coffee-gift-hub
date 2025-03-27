@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
   QrCode, 
   Building, 
@@ -120,8 +119,8 @@ const AddCoffeePoint = () => {
             </div>
             
             {/* Step Content */}
-            <Card variant="default" className="mb-8 animate-fade-up">
-              <Card.Content className="p-6 md:p-8">
+            <CustomCard variant="default" className="mb-8 animate-fade-up">
+              <CustomCard.Content className="p-6 md:p-8">
                 {step === 1 && (
                   <div>
                     <h2 className="text-xl font-bold mb-6 text-coffee-dark">Business Information</h2>
@@ -278,14 +277,14 @@ const AddCoffeePoint = () => {
                           </div>
                         </div>
                         <div className="mt-2">
-                          <Button 
+                          <CustomButton 
                             variant="outline" 
                             size="sm" 
                             fullWidth
                             icon={<MapPin className="h-4 w-4" />}
                           >
                             Pin Your Location
-                          </Button>
+                          </CustomButton>
                         </div>
                       </div>
                       
@@ -462,12 +461,12 @@ const AddCoffeePoint = () => {
                             </ul>
                             
                             <div className="mt-auto">
-                              <Button
+                              <CustomButton
                                 variant={plan.recommended ? "primary" : "outline"}
                                 fullWidth
                               >
                                 Select Plan
-                              </Button>
+                              </CustomButton>
                             </div>
                           </div>
                         </div>
@@ -539,26 +538,26 @@ const AddCoffeePoint = () => {
                     </div>
                   </div>
                 )}
-              </Card.Content>
-            </Card>
+              </CustomCard.Content>
+            </CustomCard>
             
             {/* Navigation Buttons */}
             <div className="flex justify-between">
-              <Button
+              <CustomButton
                 variant="ghost"
                 onClick={handlePrevStep}
                 disabled={step === 1}
                 icon={<ChevronLeft className="h-5 w-5" />}
               >
                 Back
-              </Button>
-              <Button
+              </CustomButton>
+              <CustomButton
                 variant="primary"
                 onClick={step < 4 ? handleNextStep : () => {}}
                 icon={step < 4 ? <ChevronRight className="h-5 w-5" /> : <CheckCircle className="h-5 w-5" />}
               >
                 {step < 4 ? 'Continue' : 'Complete Registration'}
-              </Button>
+              </CustomButton>
             </div>
           </div>
         </div>

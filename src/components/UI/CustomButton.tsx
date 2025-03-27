@@ -40,9 +40,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   disabled?: boolean;
   icon?: React.ReactNode;
   fullWidth?: boolean;
+  style?: React.CSSProperties;
 }
 
-const Button = ({
+const CustomButton = ({
   children,
   onClick,
   variant = 'primary',
@@ -53,6 +54,7 @@ const Button = ({
   icon,
   type = 'button',
   fullWidth = false,
+  style,
   ...props
 }: ButtonProps) => {
   
@@ -73,6 +75,7 @@ const Button = ({
         widthClass,
         className
       )}
+      style={style}
       {...props}
     >
       {isLoading ? (
@@ -90,5 +93,5 @@ const Button = ({
   );
 };
 
-export default Button;
-export { Button };
+export default CustomButton;
+export { CustomButton };

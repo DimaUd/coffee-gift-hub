@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
   Video, 
   Play, 
@@ -95,18 +94,18 @@ const Promotions = () => {
                   Create and manage video ads that display on coffee machines.
                 </p>
               </div>
-              <Button
+              <CustomButton
                 variant="primary"
                 icon={<Plus className="h-5 w-5" />}
               >
                 Create New Campaign
-              </Button>
+              </CustomButton>
             </div>
           </div>
           
           {/* Info Card */}
-          <Card variant="default" className="mb-8 animate-fade-up">
-            <Card.Content className="p-6">
+          <CustomCard variant="default" className="mb-8 animate-fade-up">
+            <CustomCard.Content className="p-6">
               <div className="flex items-start">
                 <Info className="h-5 w-5 text-coffee-medium mt-0.5 mr-3 flex-shrink-0" />
                 <div>
@@ -143,19 +142,19 @@ const Promotions = () => {
                   </div>
                 </div>
               </div>
-            </Card.Content>
-          </Card>
+            </CustomCard.Content>
+          </CustomCard>
           
           {/* Promotions List */}
           <div className="space-y-6">
             {promotions.map((promo, index) => (
-              <Card 
+              <CustomCard 
                 key={promo.id} 
                 variant="default" 
                 className="animate-fade-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <Card.Content className="p-6">
+                <CustomCard.Content className="p-6">
                   <div className="flex flex-col md:flex-row gap-6">
                     {/* Video thumbnail */}
                     <div className="w-full md:w-48 lg:w-64 flex-shrink-0">
@@ -213,69 +212,69 @@ const Promotions = () => {
                       
                       {/* Actions */}
                       <div className="flex flex-wrap gap-2">
-                        <Button
+                        <CustomButton
                           variant="outline"
                           size="sm"
                           icon={<Eye className="h-4 w-4" />}
                         >
                           View
-                        </Button>
+                        </CustomButton>
                         
-                        <Button
+                        <CustomButton
                           variant="outline"
                           size="sm"
                           icon={<BarChart2 className="h-4 w-4" />}
                         >
                           Analytics
-                        </Button>
+                        </CustomButton>
                         
-                        <Button
+                        <CustomButton
                           variant="outline"
                           size="sm"
                           icon={<Edit className="h-4 w-4" />}
                         >
                           Edit
-                        </Button>
+                        </CustomButton>
                         
                         {promo.status === 'active' && (
-                          <Button
+                          <CustomButton
                             variant="outline"
                             size="sm"
                             icon={<Pause className="h-4 w-4" />}
                           >
                             Pause
-                          </Button>
+                          </CustomButton>
                         )}
                         
                         {promo.status === 'paused' && (
-                          <Button
+                          <CustomButton
                             variant="outline"
                             size="sm"
                             icon={<Play className="h-4 w-4" />}
                           >
                             Resume
-                          </Button>
+                          </CustomButton>
                         )}
                         
-                        <Button
+                        <CustomButton
                           variant="ghost"
                           size="sm"
                           className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
                           icon={<Trash2 className="h-4 w-4" />}
                         >
                           Delete
-                        </Button>
+                        </CustomButton>
                       </div>
                     </div>
                   </div>
-                </Card.Content>
-              </Card>
+                </CustomCard.Content>
+              </CustomCard>
             ))}
           </div>
           
           {/* Create New Promotion Card */}
-          <Card variant="default" className="mt-8 border-dashed border-2 animate-fade-up">
-            <Card.Content className="p-8 text-center">
+          <CustomCard variant="default" className="mt-8 border-dashed border-2 animate-fade-up">
+            <CustomCard.Content className="p-8 text-center">
               <div className="mb-4">
                 <div className="mx-auto bg-coffee-light/50 w-16 h-16 rounded-full flex items-center justify-center mb-4">
                   <Upload className="h-8 w-8 text-coffee-dark" />
@@ -301,14 +300,14 @@ const Promotions = () => {
                 </div>
               </div>
               
-              <Button
+              <CustomButton
                 variant="primary"
                 icon={<Plus className="h-5 w-5" />}
               >
                 Create New Campaign
-              </Button>
-            </Card.Content>
-          </Card>
+              </CustomButton>
+            </CustomCard.Content>
+          </CustomCard>
         </div>
       </main>
       

@@ -1,40 +1,61 @@
-
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
-import Button from '../components/UI/Button';
-import Card from '../components/UI/Card';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
-  Coffee, 
-  DollarSign, 
-  CalendarDays, 
+  Gift, 
+  Mail, 
+  Phone, 
+  MessageSquare, 
+  Calendar, 
+  CreditCard, 
   QrCode, 
   Share2, 
-  ArrowRight,
-  Gift,
+  Download, 
+  Copy, 
+  ChevronLeft, 
   ChevronRight,
-  ChevronLeft,
-  Send
+  Coffee,
+  Check
 } from 'lucide-react';
 
 const GiftCreator = () => {
-  // State for gift creation steps
+  // State for multi-step form
   const [step, setStep] = React.useState(1);
-  const [giftAmount, setGiftAmount] = React.useState(25);
+  const [formData, setFormData] = React.useState({
+    amount: 25,
+    recipientName: '',
+    recipientEmail: '',
+    recipientPhone: '',
+    message: '',
+    expiryDate: '',
+    paymentMethod: 'card',
+  });
+  
+  // Handle form input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+  
+  // Handle amount selection
+  const handleAmountSelect = (amount: number) => {
+    setFormData(prev => ({ ...prev, amount }));
+  };
+  
+  // Navigate between steps
+  const nextStep = () => setStep(prev => Math.min(prev + 1, 4));
+  const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
   
   // Predefined gift amounts
   const giftAmounts = [15, 25, 50, 100];
   
-  // Handle next step
-  const handleNextStep = () => {
-    setStep(prev => prev + 1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  
-  // Handle previous step
-  const handlePrevStep = () => {
-    setStep(prev => prev - 1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Mock function for form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted with data:', formData);
+    nextStep(); // Move to success step
   };
   
   return (
@@ -43,280 +64,434 @@ const GiftCreator = () => {
       
       <main className="flex-grow pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            {/* Page Title */}
-            <div className="mb-10 text-center">
-              <div className="inline-flex items-center bg-coffee-light/50 rounded-full px-4 py-1.5 text-coffee-dark font-medium mb-4">
-                <Gift className="h-4 w-4 mr-2" />
-                Create a Gift
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-coffee-dark mb-4">
-                Send a Coffee Gift
-              </h1>
-              <p className="text-xl text-muted-foreground">
-                Create a personalized coffee gift that can be redeemed at any participating coffee point.
-              </p>
+          <div className="mb-10">
+            <div className="inline-flex items-center bg-coffee-light/50 rounded-full px-4 py-1.5 text-coffee-dark font-medium mb-4">
+              <Gift className="h-4 w-4 mr-2" />
+              Gift Creator
             </div>
-            
-            {/* Step Indicator */}
-            <div className="mb-10">
-              <div className="relative">
-                <div className="overflow-hidden h-2 mb-4 flex rounded bg-coffee-light/30">
+            <h1 className="text-3xl md:text-4xl font-bold text-coffee-dark mb-2">
+              Send a Coffee Gift
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Create a personalized coffee gift for friends, family, or colleagues.
+            </p>
+          </div>
+          
+          {/* Progress Steps */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between max-w-3xl mx-auto">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="flex flex-col items-center">
                   <div 
-                    className="bg-coffee-medium transition-all duration-500 ease-in-out"
-                    style={{ width: `${(step / 4) * 100}%` }}
-                  ></div>
+                    className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${
+                      step >= i 
+                        ? 'bg-coffee-dark text-white' 
+                        : 'bg-gray-100 text-gray-400'
+                    }`}
+                  >
+                    {step > i ? <Check className="h-5 w-5" /> : i}
+                  </div>
+                  <div className={`text-sm ${step >= i ? 'text-coffee-dark' : 'text-gray-400'}`}>
+                    {i === 1 && 'Amount'}
+                    {i === 2 && 'Details'}
+                    {i === 3 && 'Payment'}
+                    {i === 4 && 'Done'}
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <div className={`text-sm font-medium ${step >= 1 ? 'text-coffee-dark' : 'text-muted-foreground'}`}>Amount</div>
-                  <div className={`text-sm font-medium ${step >= 2 ? 'text-coffee-dark' : 'text-muted-foreground'}`}>Personalize</div>
-                  <div className={`text-sm font-medium ${step >= 3 ? 'text-coffee-dark' : 'text-muted-foreground'}`}>Payment</div>
-                  <div className={`text-sm font-medium ${step >= 4 ? 'text-coffee-dark' : 'text-muted-foreground'}`}>Share</div>
-                </div>
-              </div>
+              ))}
             </div>
-            
-            {/* Step Content */}
-            <Card variant="default" className="mb-8 animate-fade-up">
-              <Card.Content className="p-6 md:p-8">
+            <div className="relative mt-2 max-w-3xl mx-auto">
+              <div className="absolute top-0 left-[5%] right-[5%] h-1 bg-gray-200"></div>
+              <div 
+                className="absolute top-0 left-[5%] h-1 bg-coffee-dark transition-all duration-300"
+                style={{ width: `${(step - 1) * 33.33}%` }}
+              ></div>
+            </div>
+          </div>
+          
+          <div className="max-w-3xl mx-auto">
+            <CustomCard variant="default" className="animate-fade-up">
+              <CustomCard.Content className="p-8">
+                {/* Step 1: Choose Amount */}
                 {step === 1 && (
                   <div>
-                    <h2 className="text-xl font-bold mb-6 text-coffee-dark">Choose Gift Amount</h2>
+                    <h2 className="text-2xl font-bold mb-6 text-coffee-dark">Choose Gift Amount</h2>
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                      {giftAmounts.map(amount => (
+                      {giftAmounts.map((amount) => (
                         <button
                           key={amount}
-                          className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
-                            giftAmount === amount 
-                              ? 'border-coffee-medium bg-coffee-light/30 shadow-md' 
-                              : 'border-coffee-light/50 hover:border-coffee-light'
+                          type="button"
+                          onClick={() => handleAmountSelect(amount)}
+                          className={`p-4 rounded-lg border-2 text-center transition-all ${
+                            formData.amount === amount 
+                              ? 'border-coffee-dark bg-coffee-light/30 text-coffee-dark' 
+                              : 'border-gray-200 hover:border-coffee-light'
                           }`}
-                          onClick={() => setGiftAmount(amount)}
                         >
-                          <DollarSign className="h-6 w-6 text-coffee-medium mb-2" />
-                          <span className="text-xl font-bold text-coffee-dark">₪{amount}</span>
+                          <div className="text-2xl font-bold mb-1">₪{amount}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {amount <= 25 ? 'Small' : amount <= 50 ? 'Medium' : 'Large'} Gift
+                          </div>
                         </button>
                       ))}
                     </div>
                     
-                    <div className="mb-8">
-                      <label className="block text-sm font-medium text-coffee-dark mb-2">
-                        Custom Amount (₪)
-                      </label>
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium mb-2">Custom Amount</label>
                       <div className="relative">
+                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">₪</span>
                         <input
                           type="number"
-                          min="5"
+                          name="amount"
+                          value={formData.amount}
+                          onChange={handleChange}
+                          min="10"
                           max="500"
-                          value={giftAmount}
-                          onChange={(e) => setGiftAmount(Number(e.target.value))}
-                          className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                          className="pl-8 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
                         />
                       </div>
+                      <p className="text-xs text-muted-foreground mt-1">Min: ₪10, Max: ₪500</p>
                     </div>
                     
-                    <div className="text-sm text-muted-foreground bg-coffee-light/20 p-4 rounded-lg mb-8">
-                      <p>
-                        The recipient will get a coffee gift worth ₪{giftAmount}. The gift can be redeemed at any participating coffee point.
-                      </p>
+                    <div className="flex justify-end">
+                      <CustomButton 
+                        variant="primary" 
+                        onClick={nextStep}
+                        icon={<ChevronRight className="h-4 w-4" />}
+                      >
+                        Continue
+                      </CustomButton>
                     </div>
                   </div>
                 )}
                 
+                {/* Step 2: Recipient Details */}
                 {step === 2 && (
                   <div>
-                    <h2 className="text-xl font-bold mb-6 text-coffee-dark">Personalize Your Gift</h2>
+                    <h2 className="text-2xl font-bold mb-6 text-coffee-dark">Recipient Details</h2>
                     
-                    <div className="space-y-6">
+                    <div className="space-y-4 mb-8">
                       <div>
-                        <label className="block text-sm font-medium text-coffee-dark mb-2">
-                          Recipient's Name
+                        <label htmlFor="recipientName" className="block text-sm font-medium mb-1">
+                          Recipient Name
                         </label>
                         <input
+                          id="recipientName"
+                          name="recipientName"
                           type="text"
-                          className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                          value={formData.recipientName}
+                          onChange={handleChange}
+                          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
                           placeholder="Enter recipient's name"
+                          required
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-coffee-dark mb-2">
-                          Personal Message
-                        </label>
-                        <textarea
-                          rows={4}
-                          className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
-                          placeholder="Add a personal message..."
-                        ></textarea>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-coffee-dark mb-2">
-                          Gift Expiry Date
+                        <label htmlFor="recipientEmail" className="block text-sm font-medium mb-1">
+                          Email Address
                         </label>
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <CalendarDays className="h-5 w-5 text-muted-foreground" />
+                            <Mail className="h-4 w-4 text-muted-foreground" />
                           </div>
                           <input
-                            type="date"
-                            className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                            id="recipientEmail"
+                            name="recipientEmail"
+                            type="email"
+                            value={formData.recipientEmail}
+                            onChange={handleChange}
+                            className="pl-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                            placeholder="email@example.com"
                           />
                         </div>
                       </div>
+                      
+                      <div>
+                        <label htmlFor="recipientPhone" className="block text-sm font-medium mb-1">
+                          Phone Number
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Phone className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                          <input
+                            id="recipientPhone"
+                            name="recipientPhone"
+                            type="tel"
+                            value={formData.recipientPhone}
+                            onChange={handleChange}
+                            className="pl-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                            placeholder="+972 50 123 4567"
+                          />
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          We'll send the gift via SMS if provided
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium mb-1">
+                          Personal Message
+                        </label>
+                        <div className="relative">
+                          <div className="absolute top-3 left-3 pointer-events-none">
+                            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                          <textarea
+                            id="message"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            rows={3}
+                            className="pl-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                            placeholder="Write a personal message..."
+                          ></textarea>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Max 200 characters
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="expiryDate" className="block text-sm font-medium mb-1">
+                          Expiry Date
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Calendar className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                          <select
+                            id="expiryDate"
+                            name="expiryDate"
+                            value={formData.expiryDate}
+                            onChange={handleChange}
+                            className="pl-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none"
+                          >
+                            <option value="">Select expiry period</option>
+                            <option value="3months">3 months from now</option>
+                            <option value="6months">6 months from now</option>
+                            <option value="1year">1 year from now</option>
+                          </select>
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between">
+                      <CustomButton 
+                        variant="outline" 
+                        onClick={prevStep}
+                        icon={<ChevronLeft className="h-4 w-4" />}
+                      >
+                        Back
+                      </CustomButton>
+                      <CustomButton 
+                        variant="primary" 
+                        onClick={nextStep}
+                        icon={<ChevronRight className="h-4 w-4" />}
+                      >
+                        Continue
+                      </CustomButton>
                     </div>
                   </div>
                 )}
                 
+                {/* Step 3: Payment */}
                 {step === 3 && (
-                  <div>
-                    <h2 className="text-xl font-bold mb-6 text-coffee-dark">Payment Details</h2>
+                  <form onSubmit={handleSubmit}>
+                    <h2 className="text-2xl font-bold mb-6 text-coffee-dark">Payment</h2>
                     
-                    <div className="bg-secondary p-4 rounded-lg mb-6">
-                      <div className="flex justify-between mb-3">
-                        <span className="text-muted-foreground">Gift Amount:</span>
-                        <span className="font-medium">₪{giftAmount}.00</span>
-                      </div>
-                      <div className="flex justify-between mb-3">
-                        <span className="text-muted-foreground">Service Fee:</span>
-                        <span className="font-medium">₪{(giftAmount * 0.05).toFixed(2)}</span>
-                      </div>
-                      <div className="h-px bg-border my-3"></div>
-                      <div className="flex justify-between font-bold text-lg">
-                        <span>Total:</span>
-                        <span>₪{(giftAmount * 1.05).toFixed(2)}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-6">
-                      <div>
-                        <label className="block text-sm font-medium text-coffee-dark mb-2">
-                          Card Number
-                        </label>
-                        <input
-                          type="text"
-                          className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
-                          placeholder="1234 5678 9012 3456"
-                        />
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-coffee-dark mb-2">
-                            Expiry Date
-                          </label>
-                          <input
-                            type="text"
-                            className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
-                            placeholder="MM/YY"
-                          />
+                    <div className="mb-6">
+                      <h3 className="text-lg font-medium mb-3">Order Summary</h3>
+                      <div className="bg-secondary rounded-lg p-4 mb-4">
+                        <div className="flex justify-between mb-2">
+                          <span>Coffee Gift</span>
+                          <span>₪{formData.amount}</span>
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium text-coffee-dark mb-2">
-                            CVC
-                          </label>
-                          <input
-                            type="text"
-                            className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
-                            placeholder="123"
-                          />
+                        <div className="flex justify-between mb-2 text-sm text-muted-foreground">
+                          <span>Service Fee</span>
+                          <span>₪{Math.round(formData.amount * 0.05)}</span>
+                        </div>
+                        <div className="border-t border-border mt-2 pt-2 flex justify-between font-bold">
+                          <span>Total</span>
+                          <span>₪{formData.amount + Math.round(formData.amount * 0.05)}</span>
                         </div>
                       </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-coffee-dark mb-2">
-                          Name on Card
+                    </div>
+                    
+                    <div className="mb-6">
+                      <h3 className="text-lg font-medium mb-3">Payment Method</h3>
+                      <div className="space-y-3">
+                        <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-secondary transition-colors">
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="card"
+                            checked={formData.paymentMethod === 'card'}
+                            onChange={handleChange}
+                            className="mr-3"
+                          />
+                          <CreditCard className="h-5 w-5 mr-2 text-coffee-dark" />
+                          <span>Credit/Debit Card</span>
                         </label>
-                        <input
-                          type="text"
-                          className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
-                          placeholder="John Doe"
-                        />
+                        
+                        <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-secondary transition-colors">
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="paypal"
+                            checked={formData.paymentMethod === 'paypal'}
+                            onChange={handleChange}
+                            className="mr-3"
+                          />
+                          <span className="font-bold text-blue-600 mr-2">Pay</span>
+                          <span className="font-bold text-blue-800">Pal</span>
+                        </label>
+                        
+                        <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-secondary transition-colors">
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="apple"
+                            checked={formData.paymentMethod === 'apple'}
+                            onChange={handleChange}
+                            className="mr-3"
+                          />
+                          <span className="font-medium">Apple Pay</span>
+                        </label>
                       </div>
                     </div>
                     
-                    <div className="mt-6">
-                      <div className="flex items-center space-x-2">
-                        <input
-                          id="terms"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-coffee-medium focus:ring-coffee-medium"
-                        />
-                        <label htmlFor="terms" className="text-sm text-muted-foreground">
-                          I agree to the <a href="#" className="text-coffee-medium hover:underline">Terms and Conditions</a>
-                        </label>
+                    {formData.paymentMethod === 'card' && (
+                      <div className="mb-8 space-y-4">
+                        <div>
+                          <label htmlFor="cardNumber" className="block text-sm font-medium mb-1">
+                            Card Number
+                          </label>
+                          <input
+                            id="cardNumber"
+                            type="text"
+                            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                            placeholder="1234 5678 9012 3456"
+                          />
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label htmlFor="expiryDate" className="block text-sm font-medium mb-1">
+                              Expiry Date
+                            </label>
+                            <input
+                              id="expiryDate"
+                              type="text"
+                              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                              placeholder="MM/YY"
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="cvv" className="block text-sm font-medium mb-1">
+                              CVV
+                            </label>
+                            <input
+                              id="cvv"
+                              type="text"
+                              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                              placeholder="123"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="nameOnCard" className="block text-sm font-medium mb-1">
+                            Name on Card
+                          </label>
+                          <input
+                            id="nameOnCard"
+                            type="text"
+                            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                            placeholder="John Doe"
+                          />
+                        </div>
                       </div>
+                    )}
+                    
+                    <div className="flex justify-between">
+                      <CustomButton 
+                        variant="outline" 
+                        onClick={prevStep}
+                        icon={<ChevronLeft className="h-4 w-4" />}
+                        type="button"
+                      >
+                        Back
+                      </CustomButton>
+                      <CustomButton 
+                        variant="primary" 
+                        type="submit"
+                        icon={<Coffee className="h-4 w-4" />}
+                      >
+                        Pay ₪{formData.amount + Math.round(formData.amount * 0.05)}
+                      </CustomButton>
                     </div>
-                  </div>
+                  </form>
                 )}
                 
+                {/* Step 4: Success */}
                 {step === 4 && (
                   <div className="text-center">
-                    <div className="mb-6 flex justify-center">
-                      <div className="w-16 h-16 rounded-full bg-coffee-light flex items-center justify-center">
-                        <Gift className="h-8 w-8 text-coffee-dark" />
-                      </div>
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-6">
+                      <Check className="h-8 w-8" />
                     </div>
                     
-                    <h2 className="text-xl font-bold mb-2 text-coffee-dark">Your Gift is Ready!</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-coffee-dark">Gift Created Successfully!</h2>
                     <p className="text-muted-foreground mb-8">
-                      Your coffee gift has been created and is ready to be shared.
+                      Your coffee gift for {formData.recipientName || 'your recipient'} has been created and is ready to share.
                     </p>
                     
-                    <div className="bg-white border-2 border-coffee-light rounded-lg p-6 mb-8 inline-block">
-                      <div className="flex justify-center mb-4">
-                        <QrCode className="h-32 w-32 text-coffee-dark" />
-                      </div>
-                      <div className="text-center">
-                        <p className="font-medium text-coffee-dark">Coffee Gift: ₪{giftAmount}</p>
-                        <p className="text-sm text-muted-foreground">Valid until: 02/28/2024</p>
-                      </div>
+                    <div className="bg-white border-2 border-coffee-light rounded-lg p-6 mb-8 max-w-xs mx-auto">
+                      <QrCode className="h-full w-full text-coffee-dark" />
                     </div>
                     
-                    <div className="mb-8">
-                      <h3 className="font-medium text-coffee-dark mb-4">Share via:</h3>
-                      <div className="flex flex-wrap justify-center gap-3">
-                        <Button variant="outline" size="sm">WhatsApp</Button>
-                        <Button variant="outline" size="sm">Email</Button>
-                        <Button variant="outline" size="sm">SMS</Button>
-                        <Button variant="outline" size="sm">Copy Link</Button>
-                      </div>
+                    <div className="flex flex-wrap justify-center gap-3 mb-8">
+                      <CustomButton 
+                        variant="outline" 
+                        size="sm"
+                        icon={<Share2 className="h-4 w-4" />}
+                      >
+                        Share
+                      </CustomButton>
+                      <CustomButton 
+                        variant="outline" 
+                        size="sm"
+                        icon={<Download className="h-4 w-4" />}
+                      >
+                        Download
+                      </CustomButton>
+                      <CustomButton 
+                        variant="outline" 
+                        size="sm"
+                        icon={<Copy className="h-4 w-4" />}
+                      >
+                        Copy Link
+                      </CustomButton>
                     </div>
                     
                     <div className="flex justify-center">
-                      <Button 
-                        variant="primary" 
-                        icon={<Send className="h-5 w-5" />}
+                      <CustomButton 
+                        variant="primary"
+                        icon={<Gift className="h-4 w-4" />}
+                        onClick={() => setStep(1)}
                       >
-                        Send Another Gift
-                      </Button>
+                        Create Another Gift
+                      </CustomButton>
                     </div>
                   </div>
                 )}
-              </Card.Content>
-            </Card>
-            
-            {/* Navigation Buttons */}
-            {step < 4 && (
-              <div className="flex justify-between">
-                <Button
-                  variant="ghost"
-                  onClick={handlePrevStep}
-                  disabled={step === 1}
-                  icon={<ChevronLeft className="h-5 w-5" />}
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={handleNextStep}
-                  icon={<ChevronRight className="h-5 w-5" />}
-                >
-                  {step === 3 ? 'Pay & Continue' : 'Continue'}
-                </Button>
-              </div>
-            )}
+              </CustomCard.Content>
+            </CustomCard>
           </div>
         </div>
       </main>

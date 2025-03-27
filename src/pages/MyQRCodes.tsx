@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
   QrCode, 
   Filter, 
@@ -104,18 +103,18 @@ const MyQRCodes = () => {
                   Manage all your coffee gifts and QR codes in one place.
                 </p>
               </div>
-              <Button
+              <CustomButton
                 variant="primary"
                 icon={<Plus className="h-5 w-5" />}
               >
                 Create New Gift
-              </Button>
+              </CustomButton>
             </div>
           </div>
           
           {/* Filters and search */}
-          <Card variant="default" className="mb-8 animate-fade-up">
-            <Card.Content className="p-6">
+          <CustomCard variant="default" className="mb-8 animate-fade-up">
+            <CustomCard.Content className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Search */}
                 <div className="relative">
@@ -160,19 +159,19 @@ const MyQRCodes = () => {
                   </div>
                 </div>
               </div>
-            </Card.Content>
-          </Card>
+            </CustomCard.Content>
+          </CustomCard>
           
           {/* QR Codes List */}
           <div className="space-y-6">
             {qrCodes.map((qrCode, index) => (
-              <Card 
+              <CustomCard 
                 key={qrCode.id} 
                 variant="default" 
                 className="animate-fade-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <Card.Content className="p-6">
+                <CustomCard.Content className="p-6">
                   <div className="flex flex-col md:flex-row gap-6">
                     {/* QR Code */}
                     <div className="w-full md:w-40 flex-shrink-0">
@@ -237,74 +236,74 @@ const MyQRCodes = () => {
                       
                       {/* Actions */}
                       <div className="flex flex-wrap gap-2">
-                        <Button
+                        <CustomButton
                           variant="outline"
                           size="sm"
                           icon={<Eye className="h-4 w-4" />}
                         >
                           View
-                        </Button>
+                        </CustomButton>
                         
                         {qrCode.status === 'active' && (
                           <>
-                            <Button
+                            <CustomButton
                               variant="outline"
                               size="sm"
                               icon={<Copy className="h-4 w-4" />}
                             >
                               Copy Link
-                            </Button>
-                            <Button
+                            </CustomButton>
+                            <CustomButton
                               variant="outline"
                               size="sm"
                               icon={<Share2 className="h-4 w-4" />}
                             >
                               Share
-                            </Button>
-                            <Button
+                            </CustomButton>
+                            <CustomButton
                               variant="outline"
                               size="sm"
                               icon={<Clock className="h-4 w-4" />}
                             >
                               Extend
-                            </Button>
+                            </CustomButton>
                           </>
                         )}
                         
-                        <Button
+                        <CustomButton
                           variant="ghost"
                           size="sm"
                           className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
                           icon={<Trash2 className="h-4 w-4" />}
                         >
                           Delete
-                        </Button>
+                        </CustomButton>
                       </div>
                     </div>
                   </div>
-                </Card.Content>
-              </Card>
+                </CustomCard.Content>
+              </CustomCard>
             ))}
           </div>
           
           {/* Pagination */}
           <div className="mt-8 flex justify-center">
             <div className="flex space-x-1">
-              <Button variant="outline" size="sm">
+              <CustomButton variant="outline" size="sm">
                 Previous
-              </Button>
-              <Button variant="outline" size="sm" className="bg-coffee-light/50">
+              </CustomButton>
+              <CustomButton variant="outline" size="sm" className="bg-coffee-light/50">
                 1
-              </Button>
-              <Button variant="outline" size="sm">
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
                 2
-              </Button>
-              <Button variant="outline" size="sm">
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
                 3
-              </Button>
-              <Button variant="outline" size="sm">
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
                 Next
-              </Button>
+              </CustomButton>
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Button from '../components/UI/Button';
-import Card from '../components/UI/Card';
+import CustomButton from '../components/UI/CustomButton';
+import CustomCard from '../components/UI/CustomCard';
 import { Coffee, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
@@ -37,8 +37,8 @@ const Login = () => {
           </Link>
         </div>
         
-        <Card variant="default" className="w-full">
-          <Card.Content className="p-8">
+        <CustomCard variant="default" className="w-full">
+          <CustomCard.Content className="p-8">
             <h2 className="text-2xl font-bold text-center mb-6 text-coffee-dark">Welcome Back</h2>
             
             <form onSubmit={handleSubmit}>
@@ -116,9 +116,9 @@ const Login = () => {
                 </div>
                 
                 {/* Submit Button */}
-                <Button type="submit" variant="primary" fullWidth size="lg">
+                <CustomButton type="submit" variant="primary" fullWidth size="lg">
                   Sign In
-                </Button>
+                </CustomButton>
               </div>
             </form>
             
@@ -134,15 +134,15 @@ const Login = () => {
             
             {/* Social login buttons */}
             <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline">
+              <CustomButton variant="outline">
                 Google
-              </Button>
-              <Button variant="outline">
+              </CustomButton>
+              <CustomButton variant="outline">
                 Facebook
-              </Button>
+              </CustomButton>
             </div>
-          </Card.Content>
-        </Card>
+          </CustomCard.Content>
+        </CustomCard>
         
         {/* Register link */}
         <p className="text-center mt-6 text-sm text-muted-foreground">

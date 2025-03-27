@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
   Coffee, 
   MapPin, 
@@ -79,8 +78,8 @@ const CoffeeMap = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Sidebar for search and filters */}
             <div className="lg:col-span-1 order-2 lg:order-1">
-              <Card variant="default" className="sticky top-24 animate-fade-up">
-                <Card.Content className="p-6">
+              <CustomCard variant="default" className="sticky top-24 animate-fade-up">
+                <CustomCard.Content className="p-6">
                   {/* Search */}
                   <div className="mb-6">
                     <label htmlFor="search" className="block text-sm font-medium text-coffee-dark mb-2">
@@ -101,13 +100,13 @@ const CoffeeMap = () => {
                   
                   {/* Use current location */}
                   <div className="mb-6">
-                    <Button 
+                    <CustomButton 
                       variant="outline" 
                       fullWidth
                       icon={<Navigation className="h-5 w-5" />}
                     >
                       Use Current Location
-                    </Button>
+                    </CustomButton>
                   </div>
                   
                   {/* Filters */}
@@ -202,8 +201,8 @@ const CoffeeMap = () => {
                       </div>
                     </div>
                   </div>
-                </Card.Content>
-              </Card>
+                </CustomCard.Content>
+              </CustomCard>
             </div>
             
             {/* Main content - Map and list */}
@@ -243,14 +242,14 @@ const CoffeeMap = () => {
                 </div>
                 
                 {coffeePoints.map((point, index) => (
-                  <Card 
+                  <CustomCard 
                     key={point.id} 
                     variant="default" 
                     hoverable 
                     className="animate-fade-up"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <Card.Content className="p-4">
+                    <CustomCard.Content className="p-4">
                       <div className="flex items-start space-x-4">
                         <div className="bg-coffee-light/50 rounded-full p-3 text-coffee-dark">
                           <Coffee className="h-6 w-6" />
@@ -284,8 +283,8 @@ const CoffeeMap = () => {
                           </div>
                         </div>
                       </div>
-                    </Card.Content>
-                  </Card>
+                    </CustomCard.Content>
+                  </CustomCard>
                 ))}
               </div>
             </div>

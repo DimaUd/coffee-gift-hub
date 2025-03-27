@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import CustomCard from '../components/UI/CustomCard';
+import CustomButton from '../components/UI/CustomButton';
 import { 
   LayoutDashboard, 
   Users, 
@@ -149,8 +148,8 @@ const Admin = () => {
               {/* Quick Stats */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
-                  <Card key={index} variant="default">
-                    <Card.Content className="p-6">
+                  <CustomCard key={index} variant="default">
+                    <CustomCard.Content className="p-6">
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">{stat.title}</p>
@@ -163,20 +162,20 @@ const Admin = () => {
                           {stat.icon}
                         </div>
                       </div>
-                    </Card.Content>
-                  </Card>
+                    </CustomCard.Content>
+                  </CustomCard>
                 ))}
               </div>
               
               {/* System Status & Activity */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* System Status */}
-                <Card variant="default" className="lg:col-span-1">
-                  <Card.Header>
-                    <Card.Title>System Status</Card.Title>
-                    <Card.Description>Current system performance</Card.Description>
-                  </Card.Header>
-                  <Card.Content className="p-6">
+                <CustomCard variant="default" className="lg:col-span-1">
+                  <CustomCard.Header>
+                    <CustomCard.Title>System Status</CustomCard.Title>
+                    <CustomCard.Description>Current system performance</CustomCard.Description>
+                  </CustomCard.Header>
+                  <CustomCard.Content className="p-6">
                     <div className="space-y-4">
                       <div>
                         <div className="flex justify-between mb-1 text-sm">
@@ -220,35 +219,35 @@ const Admin = () => {
                     </div>
                     
                     <div className="mt-6 text-center">
-                      <Button
+                      <CustomButton
                         variant="outline"
                         size="sm"
                         icon={<RefreshCw className="h-4 w-4" />}
                       >
                         Refresh Status
-                      </Button>
+                      </CustomButton>
                     </div>
-                  </Card.Content>
-                </Card>
+                  </CustomCard.Content>
+                </CustomCard>
                 
                 {/* Recent Activity */}
-                <Card variant="default" className="lg:col-span-2">
-                  <Card.Header>
+                <CustomCard variant="default" className="lg:col-span-2">
+                  <CustomCard.Header>
                     <div className="flex justify-between items-center">
                       <div>
-                        <Card.Title>Recent Activity</Card.Title>
-                        <Card.Description>Latest system events</Card.Description>
+                        <CustomCard.Title>Recent Activity</CustomCard.Title>
+                        <CustomCard.Description>Latest system events</CustomCard.Description>
                       </div>
-                      <Button
+                      <CustomButton
                         variant="ghost"
                         size="sm"
                         icon={<Filter className="h-4 w-4" />}
                       >
                         Filter
-                      </Button>
+                      </CustomButton>
                     </div>
-                  </Card.Header>
-                  <Card.Content className="p-0">
+                  </CustomCard.Header>
+                  <CustomCard.Content className="p-0">
                     <div className="divide-y divide-border">
                       {activities.map((activity) => (
                         <div key={activity.id} className="p-4 hover:bg-muted/50 transition-colors">
@@ -260,16 +259,16 @@ const Admin = () => {
                         </div>
                       ))}
                     </div>
-                  </Card.Content>
-                  <Card.Footer className="flex justify-between px-6 py-4">
-                    <Button variant="ghost" size="sm" icon={<ChevronLeft className="h-4 w-4" />}>
+                  </CustomCard.Content>
+                  <CustomCard.Footer className="flex justify-between px-6 py-4">
+                    <CustomButton variant="ghost" size="sm" icon={<ChevronLeft className="h-4 w-4" />}>
                       Previous
-                    </Button>
-                    <Button variant="ghost" size="sm" icon={<ChevronRight className="h-4 w-4" />}>
+                    </CustomButton>
+                    <CustomButton variant="ghost" size="sm" icon={<ChevronRight className="h-4 w-4" />}>
                       Next
-                    </Button>
-                  </Card.Footer>
-                </Card>
+                    </CustomButton>
+                  </CustomCard.Footer>
+                </CustomCard>
               </div>
               
               {/* Quick Actions */}
@@ -282,14 +281,14 @@ const Admin = () => {
                     { label: 'System Alerts', icon: <Bell className="h-5 w-5" /> },
                     { label: 'Export Data', icon: <Download className="h-5 w-5" /> },
                   ].map((action, index) => (
-                    <Card key={index} variant="default" hoverable>
-                      <Card.Content className="p-4 text-center">
+                    <CustomCard key={index} variant="default" hoverable>
+                      <CustomCard.Content className="p-4 text-center">
                         <div className="bg-coffee-light/40 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-coffee-dark">
                           {action.icon}
                         </div>
                         <h4 className="text-sm font-medium">{action.label}</h4>
-                      </Card.Content>
-                    </Card>
+                      </CustomCard.Content>
+                    </CustomCard>
                   ))}
                 </div>
               </div>
