@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Coffee, ChevronDown, LayoutDashboard, Globe } from 'lucide-react';
 import CustomButton from '../UI/CustomButton';
+import { useLanguage, LANGUAGES } from '../../contexts/LanguageContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [language, setLanguage] = useState('en');
   const location = useLocation();
+  const { currentLanguage, setLanguageByCode, translate } = useLanguage();
   
   // Check if user has scrolled
   useEffect(() => {
@@ -25,28 +26,21 @@ const Header = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
-
-  // Language options
-  const languageOptions = [
-    { code: 'en', name: 'English' },
-    { code: 'he', name: 'עברית' },
-    { code: 'ru', name: 'Русский' }
-  ];
   
   // Navigation links
   const navLinks = [
-    { name: 'Get Gift', path: '/gift-creator' },
-    { name: 'Coffee Map', path: '/coffee-map' },
-    { name: 'My QR Codes', path: '/my-qr-codes' },
+    { name: translate('Get Gift'), path: '/gift-creator' },
+    { name: translate('Coffee Map'), path: '/coffee-map' },
+    { name: translate('My QR Codes'), path: '/my-qr-codes' },
     { 
-      name: 'For Businesses', 
+      name: translate('For Businesses'), 
       path: '#',
       submenu: [
-        { name: 'Add Coffee Point', path: '/add-coffee-point' },
-        { name: 'Promotions', path: '/promotions' },
+        { name: translate('Add Coffee Point'), path: '/add-coffee-point' },
+        { name: translate('Promotions'), path: '/promotions' },
       ]
     },
-    { name: 'Admin', path: '/admin', icon: <LayoutDashboard className="h-4 w-4 mr-1" /> },
+    { name: translate('Admin'), path: '/admin', icon: <LayoutDashboard className="h-4 w-4 mr-1" /> },
   ];
   
   return (
@@ -109,17 +103,17 @@ const Header = () => {
           <div className="relative group">
             <button className="flex items-center space-x-1 text-coffee-dark/90 hover:text-coffee-medium transition-colors">
               <Globe className="h-4 w-4 mr-1" />
-              <span>{languageOptions.find(l => l.code === language)?.name || 'English'}</span>
+              <span>{currentLanguage.name}</span>
               <ChevronDown className="h-4 w-4" />
             </button>
             <div className="absolute top-full right-0 mt-2 min-w-[150px] hidden group-hover:block animate-fade-in">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden py-2">
-                {languageOptions.map((lang) => (
+                {LANGUAGES.map((lang) => (
                   <button 
                     key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
+                    onClick={() => setLanguageByCode(lang.code)}
                     className={`block w-full text-left px-4 py-2 hover:bg-coffee-light transition-colors ${
-                      language === lang.code ? 'font-medium text-coffee-dark' : 'text-coffee-dark/90'
+                      currentLanguage.code === lang.code ? 'font-medium text-coffee-dark' : 'text-coffee-dark/90'
                     }`}
                   >
                     {lang.name}
@@ -129,10 +123,10 @@ const Header = () => {
             </div>
           </div>
           <CustomButton variant="ghost" size="sm">
-            Login
+            {translate('Login')}
           </CustomButton>
           <CustomButton variant="primary" size="sm">
-            Sign Up
+            {translate('Sign Up')}
           </CustomButton>
         </div>
         
@@ -188,15 +182,15 @@ const Header = () => {
             <div className="space-y-2 pt-4 border-t border-coffee-light">
               <h4 className="font-medium text-coffee-dark flex items-center">
                 <Globe className="h-4 w-4 mr-2" />
-                Language
+                {translate('Language')}
               </h4>
               <div className="pl-4 space-y-2 border-l-2 border-coffee-light">
-                {languageOptions.map((lang) => (
+                {LANGUAGES.map((lang) => (
                   <button 
                     key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
+                    onClick={() => setLanguageByCode(lang.code)}
                     className={`block text-left w-full ${
-                      language === lang.code ? 'font-medium text-coffee-dark' : 'text-coffee-dark/90'
+                      currentLanguage.code === lang.code ? 'font-medium text-coffee-dark' : 'text-coffee-dark/90'
                     }`}
                   >
                     {lang.name}
@@ -208,10 +202,10 @@ const Header = () => {
             {/* Mobile Auth Buttons */}
             <div className="flex flex-col space-y-3 pt-4 border-t border-coffee-light">
               <CustomButton variant="outline" fullWidth>
-                Login
+                {translate('Login')}
               </CustomButton>
               <CustomButton variant="primary" fullWidth>
-                Sign Up
+                {translate('Sign Up')}
               </CustomButton>
             </div>
           </div>

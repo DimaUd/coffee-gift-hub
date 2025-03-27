@@ -3,10 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
 import { Coffee, Gift, QrCode, Camera, BarChart, Bot, LayoutDashboard, Globe } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const HeroSection = () => {
+  const { translate, currentLanguage } = useLanguage();
+  
   return (
-    <section className="bg-secondary py-24 relative overflow-hidden">
+    <section className={`bg-secondary py-24 relative overflow-hidden ${currentLanguage.isRTL ? 'rtl' : 'ltr'}`}>
       {/* Background shapes */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-coffee-light/20 filter blur-3xl"></div>
@@ -22,10 +25,10 @@ const HeroSection = () => {
               <span>Available in English, עברית, Русский</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-coffee-dark mb-6">
-              The Easiest Way to Send Coffee Gifts
+              {translate('The Easiest Way to Send Coffee Gifts')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Surprise someone with a coffee, wherever they are. Create a QR code gift and send it via SMS, email, or any messaging app.
+              {translate('Surprise someone with a coffee, wherever they are. Create a QR code gift and send it via SMS, email, or any messaging app.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start flex-wrap">
               <Link to="/gift-creator">
@@ -34,7 +37,7 @@ const HeroSection = () => {
                   size="lg" 
                   icon={<Gift className="h-5 w-5" />}
                 >
-                  Send a Coffee Gift
+                  {translate('Send a Coffee Gift')}
                 </CustomButton>
               </Link>
               <Link to="/coffee-map">
@@ -43,7 +46,7 @@ const HeroSection = () => {
                   size="lg" 
                   icon={<QrCode className="h-5 w-5" />}
                 >
-                  Find Coffee Points
+                  {translate('Find Coffee Points')}
                 </CustomButton>
               </Link>
               <Link to="/scan-qr">
@@ -52,7 +55,7 @@ const HeroSection = () => {
                   size="lg" 
                   icon={<Camera className="h-5 w-5" />}
                 >
-                  Scan QR Gift
+                  {translate('Scan QR Gift')}
                 </CustomButton>
               </Link>
               <Link to="/business-promotion">
@@ -61,7 +64,7 @@ const HeroSection = () => {
                   size="lg" 
                   icon={<BarChart className="h-5 w-5" />}
                 >
-                  Promote Your Business
+                  {translate('Promote Your Business')}
                 </CustomButton>
               </Link>
               <Link to="/ai-agent">
@@ -70,7 +73,7 @@ const HeroSection = () => {
                   size="lg" 
                   icon={<Bot className="h-5 w-5" />}
                 >
-                  AI Agent
+                  {translate('AI Agent')}
                 </CustomButton>
               </Link>
               <Link to="/admin">
@@ -79,7 +82,7 @@ const HeroSection = () => {
                   size="lg" 
                   icon={<LayoutDashboard className="h-5 w-5" />}
                 >
-                  Admin Panel
+                  {translate('Admin Panel')}
                 </CustomButton>
               </Link>
             </div>
