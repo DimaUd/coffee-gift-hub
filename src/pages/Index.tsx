@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import HeroSection from '../components/UI/HeroSection';
@@ -162,13 +163,15 @@ const Index = () => {
                       </div>
                       <h3 className="text-xl font-bold mb-3 text-coffee-dark">{role.title}</h3>
                       <p className="text-muted-foreground mb-6">{role.description}</p>
-                      <CustomButton 
-                        variant="outline" 
-                        className="mt-auto" 
-                        icon={<ChevronRight className="h-4 w-4" />}
-                      >
-                        {role.cta}
-                      </CustomButton>
+                      <Link to={role.path}>
+                        <CustomButton 
+                          variant="outline" 
+                          className="mt-auto" 
+                          icon={<ChevronRight className="h-4 w-4" />}
+                        >
+                          {role.cta}
+                        </CustomButton>
+                      </Link>
                     </CustomCard.Content>
                   </CustomCard>
                 </div>
@@ -219,20 +222,24 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <CustomButton 
-                  variant="primary" 
-                  size="lg" 
-                  icon={<Gift className="h-5 w-5" />}
-                >
-                  Send Your First Gift
-                </CustomButton>
-                <CustomButton 
-                  variant="outline" 
-                  size="lg" 
-                  icon={<QrCode className="h-5 w-5" />}
-                >
-                  Explore the Platform
-                </CustomButton>
+                <Link to="/gift-creator">
+                  <CustomButton 
+                    variant="primary" 
+                    size="lg" 
+                    icon={<Gift className="h-5 w-5" />}
+                  >
+                    Send Your First Gift
+                  </CustomButton>
+                </Link>
+                <Link to="/coffee-map">
+                  <CustomButton 
+                    variant="outline" 
+                    size="lg" 
+                    icon={<QrCode className="h-5 w-5" />}
+                  >
+                    Explore Coffee Points
+                  </CustomButton>
+                </Link>
               </div>
             </div>
           </div>

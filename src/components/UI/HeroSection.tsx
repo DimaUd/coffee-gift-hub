@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
 import { Coffee, Gift, QrCode } from 'lucide-react';
 
@@ -22,20 +24,24 @@ const HeroSection = () => {
               Surprise someone with a coffee, wherever they are. Create a QR code gift and send it via SMS, email, or any messaging app.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <CustomButton 
-                variant="primary" 
-                size="lg" 
-                icon={<Gift className="h-5 w-5" />}
-              >
-                Send a Coffee Gift
-              </CustomButton>
-              <CustomButton 
-                variant="outline" 
-                size="lg" 
-                icon={<QrCode className="h-5 w-5" />}
-              >
-                Learn More
-              </CustomButton>
+              <Link to="/gift-creator">
+                <CustomButton 
+                  variant="primary" 
+                  size="lg" 
+                  icon={<Gift className="h-5 w-5" />}
+                >
+                  Send a Coffee Gift
+                </CustomButton>
+              </Link>
+              <Link to="/coffee-map">
+                <CustomButton 
+                  variant="outline" 
+                  size="lg" 
+                  icon={<QrCode className="h-5 w-5" />}
+                >
+                  Find Coffee Points
+                </CustomButton>
+              </Link>
             </div>
           </div>
           
