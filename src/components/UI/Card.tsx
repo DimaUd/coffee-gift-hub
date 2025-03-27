@@ -8,6 +8,7 @@ interface CardProps {
   variant?: 'default' | 'glass' | 'coffee' | 'outlined';
   hoverable?: boolean;
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 const Card = ({
@@ -16,6 +17,7 @@ const Card = ({
   variant = 'default',
   hoverable = false,
   onClick,
+  style,
 }: CardProps) => {
   
   // Base classes for all cards
@@ -43,6 +45,7 @@ const Card = ({
         className
       )}
       onClick={onClick}
+      style={style}
     >
       {children}
     </div>
@@ -118,3 +121,4 @@ Card.Content = CardContent;
 Card.Footer = CardFooter;
 
 export default Card;
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };

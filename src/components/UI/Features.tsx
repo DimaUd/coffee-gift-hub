@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { QrCode, MapPin, CreditCard, Coffee, Video, Award, Zap } from 'lucide-react';
-import Card from './Card';
+import { Card } from "@/components/ui/card";
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -11,14 +11,14 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <Card variant="default" hoverable className="h-full">
-      <Card.Content className="flex flex-col items-center text-center p-8">
+    <Card className="h-full">
+      <div className="flex flex-col items-center text-center p-8">
         <div className="bg-coffee-light w-16 h-16 rounded-full flex items-center justify-center mb-6">
           <div className="text-coffee-dark">{icon}</div>
         </div>
         <h3 className="text-xl font-bold mb-3 text-coffee-dark">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
-      </Card.Content>
+      </div>
     </Card>
   );
 };
