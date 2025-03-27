@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
-import { Coffee, Gift, QrCode, Camera } from 'lucide-react';
+import { Coffee, Gift, QrCode, Camera, BarChart } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -23,7 +23,7 @@ const HeroSection = () => {
             <p className="text-xl text-muted-foreground mb-8">
               Surprise someone with a coffee, wherever they are. Create a QR code gift and send it via SMS, email, or any messaging app.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start flex-wrap">
               <Link to="/gift-creator">
                 <CustomButton 
                   variant="primary" 
@@ -49,6 +49,15 @@ const HeroSection = () => {
                   icon={<Camera className="h-5 w-5" />}
                 >
                   Scan QR Gift
+                </CustomButton>
+              </Link>
+              <Link to="/business-promotion">
+                <CustomButton 
+                  variant="outline" 
+                  size="lg" 
+                  icon={<BarChart className="h-5 w-5" />}
+                >
+                  Promote Your Business
                 </CustomButton>
               </Link>
             </div>

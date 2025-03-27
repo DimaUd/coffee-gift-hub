@@ -11,6 +11,7 @@ import CoffeeMap from "./pages/CoffeeMap";
 import MyQRCodes from "./pages/MyQRCodes";
 import AddCoffeePoint from "./pages/AddCoffeePoint";
 import Promotions from "./pages/Promotions";
+import BusinessPromotion from "./pages/BusinessPromotion";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import RedeemGift from "./pages/RedeemGift";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/my-qr-codes" element={<MyQRCodes />} />
           <Route path="/add-coffee-point" element={<AddCoffeePoint />} />
           <Route path="/promotions" element={<Promotions />} />
+          <Route path="/business-promotion" element={<BusinessPromotion />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/scan-qr" element={<ScanQR />} />
           <Route path="/redeem/:giftId" element={<RedeemGift />} />
