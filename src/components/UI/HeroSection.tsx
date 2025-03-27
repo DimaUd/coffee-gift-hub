@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
-import { Coffee, Gift, QrCode } from 'lucide-react';
+import { Coffee, Gift, QrCode, Camera } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -40,6 +40,15 @@ const HeroSection = () => {
                   icon={<QrCode className="h-5 w-5" />}
                 >
                   Find Coffee Points
+                </CustomButton>
+              </Link>
+              <Link to="/scan-qr">
+                <CustomButton 
+                  variant="outline" 
+                  size="lg" 
+                  icon={<Camera className="h-5 w-5" />}
+                >
+                  Scan QR Gift
                 </CustomButton>
               </Link>
             </div>

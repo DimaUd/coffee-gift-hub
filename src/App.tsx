@@ -13,6 +13,8 @@ import AddCoffeePoint from "./pages/AddCoffeePoint";
 import Promotions from "./pages/Promotions";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import RedeemGift from "./pages/RedeemGift";
+import ScanQR from "./pages/ScanQR";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,8 @@ const App = () => (
           <Route path="/add-coffee-point" element={<AddCoffeePoint />} />
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/scan-qr" element={<ScanQR />} />
+          <Route path="/redeem/:giftId" element={<RedeemGift />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
