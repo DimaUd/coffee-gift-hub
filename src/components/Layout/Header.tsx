@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Coffee, ChevronDown } from 'lucide-react';
+import { Menu, X, Coffee, ChevronDown, LayoutDashboard } from 'lucide-react';
 import CustomButton from '../UI/CustomButton';
 
 const Header = () => {
@@ -38,6 +38,7 @@ const Header = () => {
         { name: 'Promotions', path: '/promotions' },
       ]
     },
+    { name: 'Admin', path: '/admin', icon: <LayoutDashboard className="h-4 w-4 mr-1" /> },
   ];
   
   return (
@@ -82,13 +83,14 @@ const Header = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`hover:text-coffee-medium transition-colors ${
+                className={`hover:text-coffee-medium transition-colors flex items-center ${
                   location.pathname === link.path 
                     ? 'text-coffee-dark font-medium' 
                     : 'text-coffee-dark/90'
                 }`}
               >
-                {link.name}
+                {link.icon && link.icon}
+                <span>{link.name}</span>
               </Link>
             )
           )}
@@ -142,11 +144,12 @@ const Header = () => {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-coffee-dark/90 hover:text-coffee-medium transition-colors text-lg ${
+                  className={`text-coffee-dark/90 hover:text-coffee-medium transition-colors text-lg flex items-center ${
                     location.pathname === link.path ? 'font-medium text-coffee-dark' : ''
                   }`}
                 >
-                  {link.name}
+                  {link.icon && link.icon}
+                  <span>{link.name}</span>
                 </Link>
               )
             )}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
-import { Coffee, Gift, QrCode, Camera, BarChart, Bot } from 'lucide-react';
+import { Coffee, Gift, QrCode, Camera, BarChart, Bot, LayoutDashboard } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -67,6 +67,15 @@ const HeroSection = () => {
                   icon={<Bot className="h-5 w-5" />}
                 >
                   AI Agent
+                </CustomButton>
+              </Link>
+              <Link to="/admin">
+                <CustomButton 
+                  variant="outline" 
+                  size="lg" 
+                  icon={<LayoutDashboard className="h-5 w-5" />}
+                >
+                  Admin Panel
                 </CustomButton>
               </Link>
             </div>
