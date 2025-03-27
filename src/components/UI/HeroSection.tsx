@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
-import { Coffee, Gift, QrCode, Camera, BarChart, Bot, LayoutDashboard } from 'lucide-react';
+import { Coffee, Gift, QrCode, Camera, BarChart, Bot, LayoutDashboard, Globe } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -17,6 +17,10 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Text Content */}
           <div className="text-center md:text-left">
+            <div className="inline-flex items-center bg-coffee-light/30 rounded-full px-3 py-1 text-sm text-coffee-dark mb-4">
+              <Globe className="h-4 w-4 mr-2" />
+              <span>Available in English, עברית, Русский</span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold text-coffee-dark mb-6">
               The Easiest Way to Send Coffee Gifts
             </h1>

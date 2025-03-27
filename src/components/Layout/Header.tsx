@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Coffee, ChevronDown, LayoutDashboard } from 'lucide-react';
+import { Menu, X, Coffee, ChevronDown, LayoutDashboard, Globe } from 'lucide-react';
 import CustomButton from '../UI/CustomButton';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [language, setLanguage] = useState('en');
   const location = useLocation();
   
   // Check if user has scrolled
@@ -24,6 +25,13 @@ const Header = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
+
+  // Language options
+  const languageOptions = [
+    { code: 'en', name: 'English' },
+    { code: 'he', name: 'עברית' },
+    { code: 'ru', name: 'Русский' }
+  ];
   
   // Navigation links
   const navLinks = [
@@ -96,8 +104,30 @@ const Header = () => {
           )}
         </nav>
         
-        {/* Auth Buttons */}
+        {/* Language Switcher & Auth Buttons */}
         <div className="hidden md:flex items-center space-x-3">
+          <div className="relative group">
+            <button className="flex items-center space-x-1 text-coffee-dark/90 hover:text-coffee-medium transition-colors">
+              <Globe className="h-4 w-4 mr-1" />
+              <span>{languageOptions.find(l => l.code === language)?.name || 'English'}</span>
+              <ChevronDown className="h-4 w-4" />
+            </button>
+            <div className="absolute top-full right-0 mt-2 min-w-[150px] hidden group-hover:block animate-fade-in">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden py-2">
+                {languageOptions.map((lang) => (
+                  <button 
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={`block w-full text-left px-4 py-2 hover:bg-coffee-light transition-colors ${
+                      language === lang.code ? 'font-medium text-coffee-dark' : 'text-coffee-dark/90'
+                    }`}
+                  >
+                    {lang.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
           <CustomButton variant="ghost" size="sm">
             Login
           </CustomButton>
@@ -153,6 +183,27 @@ const Header = () => {
                 </Link>
               )
             )}
+            
+            {/* Mobile Language Switcher */}
+            <div className="space-y-2 pt-4 border-t border-coffee-light">
+              <h4 className="font-medium text-coffee-dark flex items-center">
+                <Globe className="h-4 w-4 mr-2" />
+                Language
+              </h4>
+              <div className="pl-4 space-y-2 border-l-2 border-coffee-light">
+                {languageOptions.map((lang) => (
+                  <button 
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={`block text-left w-full ${
+                      language === lang.code ? 'font-medium text-coffee-dark' : 'text-coffee-dark/90'
+                    }`}
+                  >
+                    {lang.name}
+                  </button>
+                ))}
+              </div>
+            </div>
             
             {/* Mobile Auth Buttons */}
             <div className="flex flex-col space-y-3 pt-4 border-t border-coffee-light">
