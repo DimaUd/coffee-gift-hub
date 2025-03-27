@@ -18,7 +18,14 @@ import {
   RefreshCw, 
   Filter, 
   ChevronRight, 
-  ChevronLeft
+  ChevronLeft,
+  Store,
+  CreditCard,
+  Tag,
+  BarChart,
+  ChevronDown,
+  Search,
+  ArrowUpDown
 } from 'lucide-react';
 
 const Admin = () => {

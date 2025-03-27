@@ -3,58 +3,46 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import CustomCard from '../components/UI/CustomCard';
 import CustomButton from '../components/UI/CustomButton';
-import { 
-  Video, 
-  Play, 
-  Pause, 
-  Upload, 
-  Clock, 
-  Calendar, 
-  MapPin, 
-  BarChart2, 
-  Eye, 
-  Trash2, 
-  Edit, 
-  Plus, 
-  Info, 
-  DollarSign
-} from 'lucide-react';
+import { Tag, Calendar, ChevronDown, Filter, Search } from 'lucide-react';
 
 const Promotions = () => {
-  // Example promotions data
+  // Example promotion data
   const promotions = [
     {
       id: 1,
-      name: "Summer Coffee Special",
+      title: "Summer Coffee Discount",
+      description: "Enjoy 20% off on all iced coffees this summer!",
+      code: "SUMMER20",
+      startDate: "2024-06-01",
+      endDate: "2024-08-31",
       status: "active",
-      views: 1245,
-      startDate: "Jun 1, 2024",
-      endDate: "Aug 31, 2024",
-      locations: 5,
-      budget: 250,
-      thumbnail: null, // Would be an image URL in a real app
     },
     {
       id: 2,
-      name: "Morning Commuter Ad",
-      status: "scheduled",
-      views: 0,
-      startDate: "Jul 15, 2024",
-      endDate: "Sep 15, 2024",
-      locations: 3,
-      budget: 150,
-      thumbnail: null,
+      title: "New Customer Offer",
+      description: "First-time customers get a free pastry with their coffee.",
+      code: "WELCOME",
+      startDate: "2024-01-01",
+      endDate: "2024-12-31",
+      status: "active",
     },
     {
       id: 3,
-      name: "Weekend Coffee Discount",
-      status: "ended",
-      views: 3567,
-      startDate: "Mar 1, 2024",
-      endDate: "May 31, 2024",
-      locations: 8,
-      budget: 400,
-      thumbnail: null,
+      title: "Loyalty Program Bonus",
+      description: "Earn double points on all purchases for loyalty members.",
+      code: "LOYALTY",
+      startDate: "2024-05-01",
+      endDate: "2024-05-31",
+      status: "expired",
+    },
+    {
+      id: 4,
+      title: "Weekend Coffee Special",
+      description: "Buy one coffee, get the second 50% off on weekends.",
+      code: "WEEKEND50",
+      startDate: "2024-01-01",
+      endDate: "2024-12-31",
+      status: "active",
     },
   ];
   
@@ -62,9 +50,7 @@ const Promotions = () => {
   const StatusBadge = ({ status }: { status: string }) => {
     const styles = {
       active: "bg-green-100 text-green-700",
-      scheduled: "bg-blue-100 text-blue-700",
-      ended: "bg-gray-100 text-gray-700",
-      paused: "bg-yellow-100 text-yellow-700",
+      expired: "bg-gray-100 text-gray-700",
     };
     
     return (
@@ -82,63 +68,68 @@ const Promotions = () => {
         <div className="container mx-auto px-4">
           <div className="mb-10">
             <div className="inline-flex items-center bg-coffee-light/50 rounded-full px-4 py-1.5 text-coffee-dark font-medium mb-4">
-              <Video className="h-4 w-4 mr-2" />
-              Promotional Content
+              <Tag className="h-4 w-4 mr-2" />
+              Promotions
             </div>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-coffee-dark mb-2">
-                  Video Promotions
+                  Current Promotions
                 </h1>
                 <p className="text-xl text-muted-foreground">
-                  Create and manage video ads that display on coffee machines.
+                  Explore our latest promotions and special offers.
                 </p>
               </div>
               <CustomButton
                 variant="primary"
-                icon={<Plus className="h-5 w-5" />}
               >
-                Create New Campaign
+                Add New Promotion
               </CustomButton>
             </div>
           </div>
           
-          {/* Info Card */}
+          {/* Filters and search */}
           <CustomCard variant="default" className="mb-8 animate-fade-up">
             <CustomCard.Content className="p-6">
-              <div className="flex items-start">
-                <Info className="h-5 w-5 text-coffee-medium mt-0.5 mr-3 flex-shrink-0" />
-                <div>
-                  <h3 className="font-medium text-coffee-dark mb-1">How Promotions Work</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Video promotions are displayed on coffee machine screens between uses. 
-                    You can target specific locations, set run dates, and track performance.
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                    <div className="bg-coffee-light/20 p-3 rounded-lg">
-                      <h4 className="font-medium text-coffee-dark mb-1">Video Requirements</h4>
-                      <ul className="text-muted-foreground space-y-1">
-                        <li>• Max 30 seconds length</li>
-                        <li>• MP4 format, 720p quality</li>
-                        <li>• No sound required</li>
-                      </ul>
-                    </div>
-                    <div className="bg-coffee-light/20 p-3 rounded-lg">
-                      <h4 className="font-medium text-coffee-dark mb-1">Pricing Model</h4>
-                      <ul className="text-muted-foreground space-y-1">
-                        <li>• Pay per impression</li>
-                        <li>• Minimum ₪50 budget</li>
-                        <li>• Set daily/total limits</li>
-                      </ul>
-                    </div>
-                    <div className="bg-coffee-light/20 p-3 rounded-lg">
-                      <h4 className="font-medium text-coffee-dark mb-1">Content Policy</h4>
-                      <ul className="text-muted-foreground space-y-1">
-                        <li>• No explicit content</li>
-                        <li>• No competitor brands</li>
-                        <li>• AI review process</li>
-                      </ul>
-                    </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Search */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Search className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search by title or code..."
+                    className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                  />
+                </div>
+                
+                {/* Status filter */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Filter className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <select className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none">
+                    <option value="">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="expired">Expired</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                </div>
+                
+                {/* Sort by */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Calendar className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <select className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none">
+                    <option value="created">Start Date (Soonest)</option>
+                    <option value="expires">Expiry Date (Soonest)</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </div>
                 </div>
               </div>
@@ -147,66 +138,44 @@ const Promotions = () => {
           
           {/* Promotions List */}
           <div className="space-y-6">
-            {promotions.map((promo, index) => (
+            {promotions.map((promotion, index) => (
               <CustomCard 
-                key={promo.id} 
+                key={promotion.id} 
                 variant="default" 
                 className="animate-fade-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <CustomCard.Content className="p-6">
                   <div className="flex flex-col md:flex-row gap-6">
-                    {/* Video thumbnail */}
-                    <div className="w-full md:w-48 lg:w-64 flex-shrink-0">
-                      <div className="bg-coffee-light/30 border border-coffee-light/50 rounded-lg aspect-video relative group">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <Video className="h-10 w-10 text-coffee-medium" />
-                        </div>
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          {promo.status === 'active' ? (
-                            <Pause className="h-12 w-12 text-white cursor-pointer" />
-                          ) : (
-                            <Play className="h-12 w-12 text-white cursor-pointer" />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    
                     {/* Details */}
                     <div className="flex-grow">
                       <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
                         <div>
                           <h3 className="text-xl font-bold text-coffee-dark mb-1">
-                            {promo.name}
+                            {promotion.title}
                           </h3>
                           <p className="text-muted-foreground">
-                            Campaign ID: {promo.id}
+                            Code: {promotion.code}
                           </p>
                         </div>
-                        <StatusBadge status={promo.status} />
+                        <StatusBadge status={promotion.status} />
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-6 text-sm mb-6">
+                      <div className="mb-4">
+                        <p className="text-sm italic text-muted-foreground">
+                          {promotion.description}
+                        </p>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4 text-sm mb-6">
                         <div>
-                          <p className="text-muted-foreground">Campaign Period:</p>
-                          <p className="font-medium">
-                            {promo.startDate} - {promo.endDate}
-                          </p>
+                          <p className="text-muted-foreground">Start Date:</p>
+                          <p className="font-medium">{promotion.startDate}</p>
                         </div>
                         
                         <div>
-                          <p className="text-muted-foreground">Locations:</p>
-                          <p className="font-medium">{promo.locations} coffee points</p>
-                        </div>
-                        
-                        <div>
-                          <p className="text-muted-foreground">Views:</p>
-                          <p className="font-medium">{promo.views.toLocaleString()}</p>
-                        </div>
-                        
-                        <div>
-                          <p className="text-muted-foreground">Budget:</p>
-                          <p className="font-medium">₪{promo.budget}</p>
+                          <p className="text-muted-foreground">End Date:</p>
+                          <p className="font-medium">{promotion.endDate}</p>
                         </div>
                       </div>
                       
@@ -215,52 +184,14 @@ const Promotions = () => {
                         <CustomButton
                           variant="outline"
                           size="sm"
-                          icon={<Eye className="h-4 w-4" />}
-                        >
-                          View
-                        </CustomButton>
-                        
-                        <CustomButton
-                          variant="outline"
-                          size="sm"
-                          icon={<BarChart2 className="h-4 w-4" />}
-                        >
-                          Analytics
-                        </CustomButton>
-                        
-                        <CustomButton
-                          variant="outline"
-                          size="sm"
-                          icon={<Edit className="h-4 w-4" />}
                         >
                           Edit
                         </CustomButton>
-                        
-                        {promo.status === 'active' && (
-                          <CustomButton
-                            variant="outline"
-                            size="sm"
-                            icon={<Pause className="h-4 w-4" />}
-                          >
-                            Pause
-                          </CustomButton>
-                        )}
-                        
-                        {promo.status === 'paused' && (
-                          <CustomButton
-                            variant="outline"
-                            size="sm"
-                            icon={<Play className="h-4 w-4" />}
-                          >
-                            Resume
-                          </CustomButton>
-                        )}
                         
                         <CustomButton
                           variant="ghost"
                           size="sm"
                           className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
-                          icon={<Trash2 className="h-4 w-4" />}
                         >
                           Delete
                         </CustomButton>
@@ -272,42 +203,26 @@ const Promotions = () => {
             ))}
           </div>
           
-          {/* Create New Promotion Card */}
-          <CustomCard variant="default" className="mt-8 border-dashed border-2 animate-fade-up">
-            <CustomCard.Content className="p-8 text-center">
-              <div className="mb-4">
-                <div className="mx-auto bg-coffee-light/50 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Upload className="h-8 w-8 text-coffee-dark" />
-                </div>
-                <h3 className="text-xl font-bold text-coffee-dark mb-2">Upload New Video</h3>
-                <p className="text-muted-foreground mb-6">
-                  Create a new promotional campaign to reach coffee lovers.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <div className="flex flex-col items-center p-4 border border-coffee-light rounded-lg">
-                  <Video className="h-6 w-6 text-coffee-medium mb-2" />
-                  <h4 className="font-medium text-coffee-dark text-sm">Upload Video</h4>
-                </div>
-                <div className="flex flex-col items-center p-4 border border-coffee-light rounded-lg">
-                  <MapPin className="h-6 w-6 text-coffee-medium mb-2" />
-                  <h4 className="font-medium text-coffee-dark text-sm">Target Locations</h4>
-                </div>
-                <div className="flex flex-col items-center p-4 border border-coffee-light rounded-lg">
-                  <DollarSign className="h-6 w-6 text-coffee-medium mb-2" />
-                  <h4 className="font-medium text-coffee-dark text-sm">Set Budget</h4>
-                </div>
-              </div>
-              
-              <CustomButton
-                variant="primary"
-                icon={<Plus className="h-5 w-5" />}
-              >
-                Create New Campaign
+          {/* Pagination */}
+          <div className="mt-8 flex justify-center">
+            <div className="flex space-x-1">
+              <CustomButton variant="outline" size="sm">
+                Previous
               </CustomButton>
-            </CustomCard.Content>
-          </CustomCard>
+              <CustomButton variant="outline" size="sm" className="bg-coffee-light/50">
+                1
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
+                2
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
+                3
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
+                Next
+              </CustomButton>
+            </div>
+          </div>
         </div>
       </main>
       

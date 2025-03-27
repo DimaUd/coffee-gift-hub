@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import CustomCard from '../components/UI/CustomCard';
@@ -16,14 +16,15 @@ import {
   Copy, 
   ChevronLeft, 
   ChevronRight,
+  ChevronDown,
   Coffee,
   Check
 } from 'lucide-react';
 
 const GiftCreator = () => {
   // State for multi-step form
-  const [step, setStep] = React.useState(1);
-  const [formData, setFormData] = React.useState({
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
     amount: 25,
     recipientName: '',
     recipientEmail: '',

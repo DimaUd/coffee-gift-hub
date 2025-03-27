@@ -1,60 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import CustomCard from '../components/UI/CustomCard';
 import CustomButton from '../components/UI/CustomButton';
-import { 
-  Coffee, 
-  MapPin, 
-  Search, 
-  Clock, 
-  Star, 
-  Filter, 
-  ArrowUpDown, 
-  ChevronDown, 
-  Navigation
-} from 'lucide-react';
+import { MapPin, Coffee, Star, ChevronDown, Search } from 'lucide-react';
 
 const CoffeeMap = () => {
-  // Example coffee points data
-  const coffeePoints = [
+  const [coffeePoints, setCoffeePoints] = useState([
     {
       id: 1,
       name: "Bean There Coffee",
-      address: "123 Main St, Tel Aviv",
-      distance: "0.5 km",
-      rating: 4.8,
-      machineType: "Jetinno V9",
-      hours: "Open until 20:00",
+      address: "123 Main St",
+      rating: 4.5,
+      reviews: 120,
     },
     {
       id: 2,
-      name: "Caffeinated Corner",
-      address: "45 Rothschild Blvd, Tel Aviv",
-      distance: "1.2 km",
-      rating: 4.6,
-      machineType: "Nayax Nova",
-      hours: "Open 24 hours",
+      name: "Coffee Central",
+      address: "456 Elm St",
+      rating: 4.2,
+      reviews: 95,
     },
     {
       id: 3,
-      name: "Office Brews Co.",
-      address: "78 Dizengoff St, Tel Aviv",
-      distance: "2.3 km",
-      rating: 4.5,
-      machineType: "Jetinno V9",
-      hours: "Open until 18:00",
+      name: "The Coffee Bean",
+      address: "789 Oak St",
+      rating: 4.8,
+      reviews: 150,
     },
     {
       id: 4,
-      name: "Tech Park Coffee",
-      address: "90 Herzl St, Tel Aviv",
-      distance: "3.1 km",
-      rating: 4.7,
-      machineType: "Nayax Nova Plus",
-      hours: "Open until 22:00",
+      name: "Daily Grind",
+      address: "101 Pine St",
+      rating: 4.0,
+      reviews: 80,
     },
-  ];
+  ]);
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -67,226 +48,127 @@ const CoffeeMap = () => {
               <MapPin className="h-4 w-4 mr-2" />
               Coffee Map
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-coffee-dark mb-4">
-              Find Coffee Points
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              Discover nearby coffee machines where you can redeem your coffee gifts.
-            </p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-coffee-dark mb-2">
+                  Explore Coffee Points
+                </h1>
+                <p className="text-xl text-muted-foreground">
+                  Discover the best coffee shops near you.
+                </p>
+              </div>
+              <CustomButton
+                variant="primary"
+                icon={<Coffee className="h-5 w-5" />}
+              >
+                Find Coffee
+              </CustomButton>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Sidebar for search and filters */}
-            <div className="lg:col-span-1 order-2 lg:order-1">
-              <CustomCard variant="default" className="sticky top-24 animate-fade-up">
+          {/* Filters and search */}
+          <CustomCard variant="default" className="mb-8 animate-fade-up">
+            <CustomCard.Content className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Search */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Search className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search by name or address..."
+                    className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
+                  />
+                </div>
+                
+                {/* Rating filter */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Star className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <select className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none">
+                    <option value="">All Ratings</option>
+                    <option value="4.5">4.5 Stars & Up</option>
+                    <option value="4.0">4.0 Stars & Up</option>
+                    <option value="3.5">3.5 Stars & Up</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                </div>
+                
+                {/* Sort by */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <MapPin className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <select className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none">
+                    <option value="distance">Distance (Nearest)</option>
+                    <option value="rating">Rating (Highest)</option>
+                    <option value="reviews">Reviews (Most)</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                </div>
+              </div>
+            </CustomCard.Content>
+          </CustomCard>
+          
+          {/* Coffee Points List */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {coffeePoints.map((point, index) => (
+              <CustomCard 
+                key={point.id} 
+                variant="default" 
+                className="animate-fade-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <CustomCard.Content className="p-6">
-                  {/* Search */}
-                  <div className="mb-6">
-                    <label htmlFor="search" className="block text-sm font-medium text-coffee-dark mb-2">
-                      Search Location
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Search className="h-5 w-5 text-muted-foreground" />
-                      </div>
-                      <input
-                        id="search"
-                        type="text"
-                        className="block w-full pl-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors"
-                        placeholder="Enter address or location"
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* Use current location */}
-                  <div className="mb-6">
-                    <CustomButton 
-                      variant="outline" 
-                      fullWidth
-                      icon={<Navigation className="h-5 w-5" />}
-                    >
-                      Use Current Location
-                    </CustomButton>
-                  </div>
-                  
-                  {/* Filters */}
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-medium text-coffee-dark">Filters</h3>
-                      <button className="text-sm text-coffee-medium hover:text-coffee-dark">
-                        Reset
-                      </button>
-                    </div>
-                    
-                    {/* Distance filter */}
-                    <div className="mb-4">
-                      <label className="block text-sm text-muted-foreground mb-2">
-                        Maximum Distance
-                      </label>
-                      <div className="flex items-center">
-                        <input
-                          type="range"
-                          min="1"
-                          max="10"
-                          defaultValue="5"
-                          className="w-full h-2 bg-coffee-light/50 rounded-lg appearance-none cursor-pointer"
-                        />
-                        <span className="ml-2 text-sm text-muted-foreground">5 km</span>
+                  <div className="flex flex-col">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-coffee-dark">
+                        {point.name}
+                      </h3>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <Star className="h-4 w-4 text-coffee-medium" />
+                        {point.rating}
                       </div>
                     </div>
                     
-                    {/* Machine type filter */}
-                    <div className="mb-4">
-                      <label className="block text-sm text-muted-foreground mb-2">
-                        Machine Type
-                      </label>
-                      <div className="relative">
-                        <select className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none">
-                          <option value="">All Types</option>
-                          <option value="jetinno">Jetinno</option>
-                          <option value="nayax">Nayax</option>
-                          <option value="other">Other</option>
-                        </select>
-                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                          <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                        </div>
-                      </div>
-                    </div>
+                    <p className="text-muted-foreground mb-4">
+                      {point.address}
+                    </p>
                     
-                    {/* Open now filter */}
-                    <div className="mb-4">
-                      <div className="flex items-center">
-                        <input
-                          id="open-now"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-coffee-medium focus:ring-coffee-medium"
-                        />
-                        <label htmlFor="open-now" className="ml-2 text-sm text-muted-foreground">
-                          Open Now
-                        </label>
-                      </div>
-                    </div>
-                    
-                    {/* Minimum rating filter */}
-                    <div>
-                      <label className="block text-sm text-muted-foreground mb-2">
-                        Minimum Rating
-                      </label>
-                      <div className="flex space-x-1">
-                        {[1, 2, 3, 4, 5].map((rating) => (
-                          <button
-                            key={rating}
-                            className="flex-1 py-1 border border-coffee-light rounded hover:bg-coffee-light/30 transition-colors"
-                          >
-                            {rating}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Sort by */}
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-medium text-coffee-dark">Sort By</h3>
-                    </div>
-                    <div className="relative">
-                      <select className="block w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:ring-2 focus:ring-coffee-medium focus:border-coffee-medium transition-colors appearance-none">
-                        <option value="distance">Distance (Nearest)</option>
-                        <option value="rating">Rating (Highest)</option>
-                        <option value="name">Name (A-Z)</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
-                      </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Coffee className="h-4 w-4 text-coffee-medium" />
+                      {point.reviews} reviews
                     </div>
                   </div>
                 </CustomCard.Content>
               </CustomCard>
-            </div>
-            
-            {/* Main content - Map and list */}
-            <div className="lg:col-span-2 order-1 lg:order-2">
-              {/* Map placeholder */}
-              <div className="bg-coffee-light/30 rounded-xl h-[300px] lg:h-[400px] mb-8 relative animate-fade-up">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MapPin className="h-10 w-10 text-coffee-medium" />
-                </div>
-                
-                {/* Coffee point markers */}
-                <div className="absolute top-1/4 left-1/4 w-10 h-10 flex items-center justify-center">
-                  <div className="absolute w-3 h-3 bg-coffee-dark rounded-full"></div>
-                  <div className="w-10 h-10 bg-coffee-dark/20 rounded-full animate-ping"></div>
-                </div>
-                <div className="absolute top-1/2 right-1/3 w-10 h-10 flex items-center justify-center">
-                  <div className="absolute w-3 h-3 bg-coffee-dark rounded-full"></div>
-                  <div className="w-10 h-10 bg-coffee-dark/20 rounded-full animate-ping"></div>
-                </div>
-                <div className="absolute bottom-1/3 left-1/2 w-10 h-10 flex items-center justify-center">
-                  <div className="absolute w-3 h-3 bg-coffee-dark rounded-full"></div>
-                  <div className="w-10 h-10 bg-coffee-dark/20 rounded-full animate-ping"></div>
-                </div>
-                <div className="absolute top-2/3 right-1/4 w-10 h-10 flex items-center justify-center">
-                  <div className="absolute w-3 h-3 bg-coffee-dark rounded-full"></div>
-                  <div className="w-10 h-10 bg-coffee-dark/20 rounded-full animate-ping"></div>
-                </div>
-              </div>
-              
-              {/* List of coffee points */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-xl font-bold text-coffee-dark">Coffee Points</h2>
-                  <div className="text-sm text-muted-foreground">
-                    {coffeePoints.length} locations found
-                  </div>
-                </div>
-                
-                {coffeePoints.map((point, index) => (
-                  <CustomCard 
-                    key={point.id} 
-                    variant="default" 
-                    hoverable 
-                    className="animate-fade-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <CustomCard.Content className="p-4">
-                      <div className="flex items-start space-x-4">
-                        <div className="bg-coffee-light/50 rounded-full p-3 text-coffee-dark">
-                          <Coffee className="h-6 w-6" />
-                        </div>
-                        <div className="flex-grow">
-                          <div className="flex justify-between items-start">
-                            <h3 className="font-bold text-coffee-dark">{point.name}</h3>
-                            <div className="flex items-center space-x-1 text-coffee-medium">
-                              <Star className="h-4 w-4 fill-current" />
-                              <span className="text-sm font-medium">{point.rating}</span>
-                            </div>
-                          </div>
-                          <p className="text-sm text-muted-foreground mb-2">{point.address}</p>
-                          <div className="flex flex-wrap gap-y-2 gap-x-4 text-sm">
-                            <div className="flex items-center text-muted-foreground">
-                              <MapPin className="h-4 w-4 mr-1" />
-                              <span>{point.distance}</span>
-                            </div>
-                            <div className="flex items-center text-muted-foreground">
-                              <Clock className="h-4 w-4 mr-1" />
-                              <span>{point.hours}</span>
-                            </div>
-                          </div>
-                          <div className="mt-3 flex space-x-2">
-                            <div className="text-xs bg-coffee-light/50 px-2 py-1 rounded-full text-coffee-dark">
-                              {point.machineType}
-                            </div>
-                            <div className="text-xs bg-coffee-light/50 px-2 py-1 rounded-full text-coffee-dark">
-                              QR Enabled
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </CustomCard.Content>
-                  </CustomCard>
-                ))}
-              </div>
+            ))}
+          </div>
+          
+          {/* Pagination */}
+          <div className="mt-8 flex justify-center">
+            <div className="flex space-x-1">
+              <CustomButton variant="outline" size="sm">
+                Previous
+              </CustomButton>
+              <CustomButton variant="outline" size="sm" className="bg-coffee-light/50">
+                1
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
+                2
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
+                3
+              </CustomButton>
+              <CustomButton variant="outline" size="sm">
+                Next
+              </CustomButton>
             </div>
           </div>
         </div>
