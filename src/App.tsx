@@ -16,6 +16,7 @@ import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import RedeemGift from "./pages/RedeemGift";
 import ScanQR from "./pages/ScanQR";
+import AIAgent from "./pages/AIAgent";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/scan-qr" element={<ScanQR />} />
           <Route path="/redeem/:giftId" element={<RedeemGift />} />
+          <Route path="/ai-agent" element={<AIAgent />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

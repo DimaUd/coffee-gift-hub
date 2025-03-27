@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from './CustomButton';
-import { Coffee, Gift, QrCode, Camera, BarChart } from 'lucide-react';
+import { Coffee, Gift, QrCode, Camera, BarChart, Bot } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -58,6 +58,15 @@ const HeroSection = () => {
                   icon={<BarChart className="h-5 w-5" />}
                 >
                   Promote Your Business
+                </CustomButton>
+              </Link>
+              <Link to="/ai-agent">
+                <CustomButton 
+                  variant="outline" 
+                  size="lg" 
+                  icon={<Bot className="h-5 w-5" />}
+                >
+                  AI Agent
                 </CustomButton>
               </Link>
             </div>
