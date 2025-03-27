@@ -1,9 +1,25 @@
+
 import React from 'react';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
-import { QrCode } from 'lucide-react';
+import { 
+  QrCode, 
+  Building, 
+  AtSign, 
+  Phone, 
+  MapPin, 
+  Clock, 
+  CreditCard, 
+  Wifi, 
+  Upload, 
+  CheckCircle, 
+  Info, 
+  ChevronLeft, 
+  ChevronRight,
+  Store 
+} from 'lucide-react';
 
 const AddCoffeePoint = () => {
   // State for registration steps
