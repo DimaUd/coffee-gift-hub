@@ -28,7 +28,7 @@ const RoleBasedNavLink = ({
   const t = useTranslate();
   const location = useLocation();
 
-  // Check if user has access
+  // Check if user has access based on role requirements
   const hasAccess = hasRole(requiredRole);
   
   // If authentication is required and user is not authenticated, don't show the link
@@ -36,23 +36,33 @@ const RoleBasedNavLink = ({
     return null;
   }
   
-  // If user doesn't have the required role, don't render the link
-  if (!hasAccess) {
+  // If user doesn't have the required role for protected pages, don't render the link
+  if (!hasAccess && requiredRole !== "any") {
     return null;
   }
   
   // Check if current path matches this link for active styling
-  const isActive = location.pathname === to;
+  // Use startsWith to match parent routes too
+  const isActive = location.pathname === to || 
+                  (to !== '/' && location.pathname.startsWith(to));
+  
   const combinedClassName = cn(
     className,
     isActive ? activeClassName : ""
   );
 
+  // Use the onClick handler if provided, otherwise just navigate
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <Link 
       to={to} 
       className={combinedClassName}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </Link>

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type UserRole = {
@@ -98,7 +99,7 @@ export const UserRoleProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const hasRole = (role: string): boolean => {
-    if (role === "giftCreator") return true;
+    if (role === "giftCreator") return userRoles.isGiftCreator;
     if (role === "coffeePointOwner") return userRoles.isCoffeePointOwner && userRoles.isAuthenticated;
     if (role === "authenticated") return userRoles.isAuthenticated;
     if (role === "adminValidated") return userRoles.isAdminValidated && userRoles.isAuthenticated;
