@@ -8,7 +8,9 @@ type UserRole = {
 
 interface UserRoleContextType {
   userRoles: UserRole;
-  updateUserRoles: (roles: UserRole) => void;
+  updateUserRoles: (roles: Partial<UserRole>) => void;
+  hasRole: (role: string) => boolean;
+  toggleRole: (role: "isGiftCreator" | "isCoffeePointOwner") => void;
 }
 
 const defaultRoles: UserRole = {
@@ -36,19 +38,45 @@ export const UserRoleProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const updateUserRoles = (roles: UserRole) => {
-    // Ensure at least one role is enabled
-    const validatedRoles = {
-      ...roles,
-      isGiftCreator: roles.isGiftCreator || (!roles.isGiftCreator && !roles.isCoffeePointOwner) ? true : roles.isGiftCreator,
-    };
+  // Update user roles with partial updates
+  const updateUserRoles = (roles: Partial<UserRole>) => {
+    // Create updated roles by merging current and new roles
+    const updatedRoles = { ...userRoles, ...roles };
     
-    setUserRoles(validatedRoles);
-    localStorage.setItem('userRolePreferences', JSON.stringify(validatedRoles));
+    // Ensure at least one role is enabled
+    if (!updatedRoles.isGiftCreator && !updatedRoles.isCoffeePointOwner) {
+      updatedRoles.isGiftCreator = true;
+    }
+    
+    setUserRoles(updatedRoles);
+    localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
+  };
+
+  // Toggle a specific role
+  const toggleRole = (role: "isGiftCreator" | "isCoffeePointOwner") => {
+    const newValue = !userRoles[role];
+    
+    // If trying to disable the last enabled role, don't allow it
+    if (!newValue && !userRoles[role === "isGiftCreator" ? "isCoffeePointOwner" : "isGiftCreator"]) {
+      return; // Don't allow disabling the last role
+    }
+    
+    const updatedRoles = { ...userRoles, [role]: newValue };
+    setUserRoles(updatedRoles);
+    localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
+  };
+
+  // Check if user has a specific role
+  const hasRole = (role: string): boolean => {
+    if (role === "giftCreator") return userRoles.isGiftCreator;
+    if (role === "coffeePointOwner") return userRoles.isCoffeePointOwner;
+    if (role === "both") return userRoles.isGiftCreator && userRoles.isCoffeePointOwner;
+    if (role === "any") return true;
+    return false;
   };
 
   return (
-    <UserRoleContext.Provider value={{ userRoles, updateUserRoles }}>
+    <UserRoleContext.Provider value={{ userRoles, updateUserRoles, hasRole, toggleRole }}>
       {children}
     </UserRoleContext.Provider>
   );
