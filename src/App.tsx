@@ -9,6 +9,8 @@ import { UserRoleProvider } from "./contexts/UserRoleContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import GiftCreator from "./pages/GiftCreator";
+import SingleGiftCreator from "./pages/gift/SingleGiftCreator";
+import BulkGiftCreator from "./pages/gift/BulkGiftCreator";
 import CoffeeMap from "./pages/CoffeeMap";
 import MyQRCodes from "./pages/MyQRCodes";
 import AddCoffeePoint from "./pages/AddCoffeePoint";
@@ -35,6 +37,8 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/gift-creator" element={<GiftCreator />} />
+              <Route path="/gift-creator/single" element={<SingleGiftCreator />} />
+              <Route path="/gift-creator/bulk" element={<BulkGiftCreator />} />
               <Route path="/coffee-map" element={<CoffeeMap />} />
               <Route path="/my-qr-codes" element={<MyQRCodes />} />
               <Route path="/add-coffee-point" element={<AddCoffeePoint />} />

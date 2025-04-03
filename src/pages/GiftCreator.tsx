@@ -31,40 +31,26 @@ const GiftCreator: React.FC = () => {
     setIsCreatingSingleGift(true);
     toast({
       title: t("Creating Gift"),
-      description: t("Preparing your single gift creation form..."),
+      description: t("Starting single gift creation..."),
     });
     
-    // For demo purposes, simulate a delay then reset the loading state
     setTimeout(() => {
       setIsCreatingSingleGift(false);
-      // In a real app, you would navigate to a form or open a modal
-      toast({
-        title: t("Gift Creation Ready"),
-        description: t("You can now create your gift."),
-      });
-      // Future implementation would navigate to a dedicated page or show a form
-      // navigate('/create-single-gift');
-    }, 1500);
+      navigate('/gift-creator/single');
+    }, 1000);
   };
   
   const handleCreateBulkGifts = () => {
     setIsCreatingBulkGifts(true);
     toast({
       title: t("Creating Bulk Gifts"),
-      description: t("Preparing your bulk gift creation form..."),
+      description: t("Starting bulk gift creation..."),
     });
     
-    // For demo purposes, simulate a delay then reset the loading state
     setTimeout(() => {
       setIsCreatingBulkGifts(false);
-      // In a real app, you would navigate to a form or open a modal
-      toast({
-        title: t("Bulk Gift Creation Ready"),
-        description: t("You can now create multiple gifts."),
-      });
-      // Future implementation would navigate to a dedicated page or show a form
-      // navigate('/create-bulk-gifts');
-    }, 1500);
+      navigate('/gift-creator/bulk');
+    }, 1000);
   };
   
   if (!userRoles.isGiftCreator) {
