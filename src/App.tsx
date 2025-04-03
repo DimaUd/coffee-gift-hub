@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { UserRoleProvider } from "./contexts/UserRoleContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import GiftCreator from "./pages/GiftCreator";
@@ -18,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import RedeemGift from "./pages/RedeemGift";
 import ScanQR from "./pages/ScanQR";
 import AIAgent from "./pages/AIAgent";
+import ProfileSettings from "./pages/ProfileSettings";
 
 const queryClient = new QueryClient();
 
@@ -25,26 +27,29 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LanguageProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/gift-creator" element={<GiftCreator />} />
-            <Route path="/coffee-map" element={<CoffeeMap />} />
-            <Route path="/my-qr-codes" element={<MyQRCodes />} />
-            <Route path="/add-coffee-point" element={<AddCoffeePoint />} />
-            <Route path="/promotions" element={<Promotions />} />
-            <Route path="/business-promotion" element={<BusinessPromotion />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/scan-qr" element={<ScanQR />} />
-            <Route path="/redeem/:giftId" element={<RedeemGift />} />
-            <Route path="/ai-agent" element={<AIAgent />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <UserRoleProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/gift-creator" element={<GiftCreator />} />
+              <Route path="/coffee-map" element={<CoffeeMap />} />
+              <Route path="/my-qr-codes" element={<MyQRCodes />} />
+              <Route path="/add-coffee-point" element={<AddCoffeePoint />} />
+              <Route path="/promotions" element={<Promotions />} />
+              <Route path="/business-promotion" element={<BusinessPromotion />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/scan-qr" element={<ScanQR />} />
+              <Route path="/redeem/:giftId" element={<RedeemGift />} />
+              <Route path="/ai-agent" element={<AIAgent />} />
+              <Route path="/profile-settings" element={<ProfileSettings />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </UserRoleProvider>
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
