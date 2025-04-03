@@ -1,9 +1,10 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type UserRole = {
   isGiftCreator: boolean;
   isCoffeePointOwner: boolean;
+  isAuthenticated: boolean;
+  isAdminValidated: boolean;
 };
 
 interface UserRoleContextType {
@@ -11,11 +12,16 @@ interface UserRoleContextType {
   updateUserRoles: (roles: Partial<UserRole>) => void;
   hasRole: (role: string) => boolean;
   toggleRole: (role: "isGiftCreator" | "isCoffeePointOwner") => void;
+  requestOwnerRole: () => void;
+  login: () => void;
+  logout: () => void;
 }
 
 const defaultRoles: UserRole = {
   isGiftCreator: true,
   isCoffeePointOwner: false,
+  isAuthenticated: false,
+  isAdminValidated: false,
 };
 
 const UserRoleContext = createContext<UserRoleContextType | undefined>(undefined);
@@ -23,60 +29,94 @@ const UserRoleContext = createContext<UserRoleContextType | undefined>(undefined
 export const UserRoleProvider = ({ children }: { children: ReactNode }) => {
   const [userRoles, setUserRoles] = useState<UserRole>(defaultRoles);
 
-  // Load saved preferences on initial render
   useEffect(() => {
     const savedPreferences = localStorage.getItem('userRolePreferences');
     if (savedPreferences) {
       try {
         const parsedPreferences = JSON.parse(savedPreferences);
-        setUserRoles(parsedPreferences);
+        setUserRoles({...parsedPreferences, 
+          isGiftCreator: true
+        });
       } catch (error) {
         console.error('Failed to parse user role preferences:', error);
-        // If there's an error, use default roles
         setUserRoles(defaultRoles);
       }
     }
   }, []);
 
-  // Update user roles with partial updates
   const updateUserRoles = (roles: Partial<UserRole>) => {
-    // Create updated roles by merging current and new roles
     const updatedRoles = { ...userRoles, ...roles };
-    
-    // Ensure at least one role is enabled
-    if (!updatedRoles.isGiftCreator && !updatedRoles.isCoffeePointOwner) {
-      updatedRoles.isGiftCreator = true;
-    }
-    
+    updatedRoles.isGiftCreator = true;
     setUserRoles(updatedRoles);
     localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
   };
 
-  // Toggle a specific role
   const toggleRole = (role: "isGiftCreator" | "isCoffeePointOwner") => {
-    const newValue = !userRoles[role];
+    if (role === "isGiftCreator") return;
     
-    // If trying to disable the last enabled role, don't allow it
-    if (!newValue && !userRoles[role === "isGiftCreator" ? "isCoffeePointOwner" : "isGiftCreator"]) {
-      return; // Don't allow disabling the last role
+    if (role === "isCoffeePointOwner") {
+      if (!userRoles.isAuthenticated) {
+        return;
+      }
+      if (!userRoles.isAdminValidated && !userRoles.isCoffeePointOwner) {
+        return;
+      }
     }
     
+    const newValue = !userRoles[role];
     const updatedRoles = { ...userRoles, [role]: newValue };
     setUserRoles(updatedRoles);
     localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
   };
 
-  // Check if user has a specific role
+  const requestOwnerRole = () => {
+    if (!userRoles.isAuthenticated) return;
+    
+    console.log("Requesting coffee point owner role");
+    setTimeout(() => {
+      const updatedRoles = { ...userRoles, isAdminValidated: true };
+      setUserRoles(updatedRoles);
+      localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
+    }, 2000);
+  };
+
+  const login = () => {
+    const updatedRoles = { ...userRoles, isAuthenticated: true };
+    setUserRoles(updatedRoles);
+    localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
+  };
+
+  const logout = () => {
+    const updatedRoles = { 
+      ...defaultRoles,
+      isAuthenticated: false,
+      isAdminValidated: false,
+      isCoffeePointOwner: false,
+    };
+    setUserRoles(updatedRoles);
+    localStorage.setItem('userRolePreferences', JSON.stringify(updatedRoles));
+  };
+
   const hasRole = (role: string): boolean => {
-    if (role === "giftCreator") return userRoles.isGiftCreator;
-    if (role === "coffeePointOwner") return userRoles.isCoffeePointOwner;
-    if (role === "both") return userRoles.isGiftCreator && userRoles.isCoffeePointOwner;
+    if (role === "giftCreator") return true;
+    if (role === "coffeePointOwner") return userRoles.isCoffeePointOwner && userRoles.isAuthenticated;
+    if (role === "authenticated") return userRoles.isAuthenticated;
+    if (role === "adminValidated") return userRoles.isAdminValidated && userRoles.isAuthenticated;
+    if (role === "both") return userRoles.isGiftCreator && userRoles.isCoffeePointOwner && userRoles.isAuthenticated;
     if (role === "any") return true;
     return false;
   };
 
   return (
-    <UserRoleContext.Provider value={{ userRoles, updateUserRoles, hasRole, toggleRole }}>
+    <UserRoleContext.Provider value={{ 
+      userRoles, 
+      updateUserRoles, 
+      hasRole, 
+      toggleRole,
+      requestOwnerRole,
+      login,
+      logout
+    }}>
       {children}
     </UserRoleContext.Provider>
   );

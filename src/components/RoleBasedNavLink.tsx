@@ -7,11 +7,12 @@ import { cn } from "@/lib/utils";
 
 type RoleBasedNavLinkProps = {
   to: string;
-  requiredRole: "giftCreator" | "coffeePointOwner" | "both" | "any";
+  requiredRole: "giftCreator" | "coffeePointOwner" | "authenticated" | "adminValidated" | "both" | "any";
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
   onClick?: () => void;
+  requiresAuth?: boolean;
 };
 
 const RoleBasedNavLink = ({ 
@@ -20,14 +21,23 @@ const RoleBasedNavLink = ({
   children, 
   className = "",
   activeClassName = "", 
-  onClick
+  onClick,
+  requiresAuth = false,
 }: RoleBasedNavLinkProps) => {
-  const { hasRole } = useUserRole();
+  const { hasRole, userRoles } = useUserRole();
   const t = useTranslate();
   const location = useLocation();
 
+  // Check if user has access
+  const hasAccess = hasRole(requiredRole);
+  
+  // If authentication is required and user is not authenticated, don't show the link
+  if (requiresAuth && !userRoles.isAuthenticated) {
+    return null;
+  }
+  
   // If user doesn't have the required role, don't render the link
-  if (!hasRole(requiredRole)) {
+  if (!hasAccess) {
     return null;
   }
   

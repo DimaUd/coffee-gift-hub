@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Settings, AlertTriangle, Store, MapPin, Coffee } from "lucide-react";
+import { Settings, AlertTriangle, Store, MapPin, Coffee, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import useTranslate from "@/hooks/useTranslate";
 import { useUserRole } from "@/contexts/UserRoleContext";
@@ -11,40 +11,92 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 const AddCoffeePoint = () => {
   const t = useTranslate();
-  const { userRoles } = useUserRole();
+  const { userRoles, login, requestOwnerRole } = useUserRole();
   const { toast } = useToast();
   
-  // Show toast notification if user is not a coffee point owner
+  // Show different messages based on what's missing
   useEffect(() => {
-    if (!userRoles.isCoffeePointOwner) {
+    if (!userRoles.isAuthenticated) {
       toast({
-        title: t("Role Required"),
-        description: t("You need to enable the Coffee Point Owner role in settings to use this feature."),
+        title: t("Authentication Required"),
+        description: t("You need to log in to add a coffee point."),
+        variant: "destructive",
+      });
+    } else if (!userRoles.isAdminValidated) {
+      toast({
+        title: t("Approval Required"),
+        description: t("You need admin approval to add coffee points."),
+        variant: "destructive",
+      });
+    } else if (!userRoles.isCoffeePointOwner) {
+      toast({
+        title: t("Role Disabled"),
+        description: t("You need to enable the Coffee Point Owner role in settings."),
         variant: "destructive",
       });
     }
-  }, [userRoles.isCoffeePointOwner, toast, t]);
+  }, [userRoles, toast, t]);
   
-  if (!userRoles.isCoffeePointOwner) {
+  // If not authenticated at all
+  if (!userRoles.isAuthenticated) {
     return (
       <div className="container mx-auto py-8 px-4">
         <Alert variant="destructive" className="mb-6">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>{t("Access Restricted")}</AlertTitle>
+          <Lock className="h-4 w-4" />
+          <AlertTitle>{t("Authentication Required")}</AlertTitle>
           <AlertDescription>
-            {t("You need to enable the Coffee Point Owner role to access this page.")}
+            {t("You need to log in to access Coffee Point Owner features.")}
+          </AlertDescription>
+        </Alert>
+        
+        <div className="flex justify-center">
+          <Button onClick={() => login()}>{t("Log In")}</Button>
+        </div>
+      </div>
+    );
+  }
+  
+  // If authenticated but not admin validated
+  if (!userRoles.isAdminValidated) {
+    return (
+      <div className="container mx-auto py-8 px-4">
+        <Alert className="mb-6">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>{t("Admin Approval Required")}</AlertTitle>
+          <AlertDescription>
+            {t("You need to request Coffee Point Owner access and get approved by an admin.")}
+          </AlertDescription>
+        </Alert>
+        
+        <div className="flex justify-center">
+          <Button onClick={() => requestOwnerRole()}>{t("Request Owner Access")}</Button>
+        </div>
+      </div>
+    );
+  }
+  
+  // If validated but role is turned off
+  if (!userRoles.isCoffeePointOwner) {
+    return (
+      <div className="container mx-auto py-8 px-4">
+        <Alert className="mb-6">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>{t("Role Not Enabled")}</AlertTitle>
+          <AlertDescription>
+            {t("You have been approved as a Coffee Point Owner, but the role is currently disabled.")}
           </AlertDescription>
         </Alert>
         
         <div className="flex justify-center">
           <Link to="/profile-settings">
-            <Button>{t("Go to Profile Settings")}</Button>
+            <Button>{t("Enable Owner Role")}</Button>
           </Link>
         </div>
       </div>
     );
   }
   
+  // If all requirements are met, show the full page
   return (
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-6">

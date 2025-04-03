@@ -7,7 +7,7 @@ import { useUserRole } from "@/contexts/UserRoleContext";
 import { useToast } from "@/hooks/use-toast";
 import useTranslate from "@/hooks/useTranslate";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertTriangle, Coffee } from "lucide-react";
+import { AlertTriangle, Coffee, Lock, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -21,25 +21,38 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Gift } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ScanQR = () => {
-  const { userRoles, toggleRole } = useUserRole();
+  const { userRoles, toggleRole, login, requestOwnerRole } = useUserRole();
   const { toast } = useToast();
   const t = useTranslate();
   
-  // Notify users if they're not a coffee point owner
+  // Different toast messages based on what's missing
   useEffect(() => {
-    if (!userRoles.isCoffeePointOwner) {
+    if (!userRoles.isAuthenticated) {
       toast({
-        title: t("Role Required"),
-        description: t("You need to enable the Coffee Point Owner role to redeem gifts"),
+        title: t("Authentication Required"),
+        description: t("You need to log in to scan and redeem gifts."),
+        variant: "destructive",
+      });
+    } else if (!userRoles.isAdminValidated) {
+      toast({
+        title: t("Approval Required"),
+        description: t("You need admin approval to scan and redeem gifts."),
+        variant: "destructive",
+      });
+    } else if (!userRoles.isCoffeePointOwner) {
+      toast({
+        title: t("Role Disabled"),
+        description: t("You need to enable the Coffee Point Owner role in settings."),
         variant: "destructive",
       });
     }
-  }, [userRoles.isCoffeePointOwner, toast, t]);
+  }, [userRoles, toast, t]);
   
-  // Show different content based on user role
-  if (!userRoles.isCoffeePointOwner) {
+  // If not authenticated
+  if (!userRoles.isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -49,19 +62,109 @@ const ScanQR = () => {
             <div className="container mx-auto px-4">
               <div className="max-w-md mx-auto">
                 <Alert variant="destructive" className="mb-6">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertTitle>{t("Access Restricted")}</AlertTitle>
+                  <Lock className="h-4 w-4" />
+                  <AlertTitle>{t("Authentication Required")}</AlertTitle>
                   <AlertDescription>
-                    {t("You need to enable the Coffee Point Owner role to scan and redeem coffee gifts.")}
+                    {t("You need to log in to scan and redeem coffee gifts.")}
                   </AlertDescription>
                 </Alert>
                 
                 <div className="text-center space-y-6">
                   <div className="bg-muted p-8 rounded-lg inline-block mx-auto">
                     <Coffee className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                    <h2 className="text-xl font-medium mb-2">{t("Coffee Point Owner Role")}</h2>
+                    <h2 className="text-xl font-medium mb-2">{t("Coffee Point Owner Access")}</h2>
                     <p className="text-muted-foreground mb-6">
-                      {t("Enable the Coffee Point Owner role to scan and redeem coffee gifts at your location.")}
+                      {t("Log in to access Coffee Point Owner features.")}
+                    </p>
+                    
+                    <Button 
+                      variant="default" 
+                      className="flex items-center gap-2"
+                      onClick={() => login()}
+                    >
+                      {t("Log In")}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        
+        <Footer />
+      </div>
+    );
+  }
+  
+  // If authenticated but not admin validated
+  if (!userRoles.isAdminValidated) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        
+        <main className="flex-grow">
+          <section className="py-16">
+            <div className="container mx-auto px-4">
+              <div className="max-w-md mx-auto">
+                <Alert className="mb-6">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertTitle>{t("Admin Approval Required")}</AlertTitle>
+                  <AlertDescription>
+                    {t("You need to request Coffee Point Owner access and get approved.")}
+                  </AlertDescription>
+                </Alert>
+                
+                <div className="text-center space-y-6">
+                  <div className="bg-muted p-8 rounded-lg inline-block mx-auto">
+                    <Store className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                    <h2 className="text-xl font-medium mb-2">{t("Request Owner Approval")}</h2>
+                    <p className="text-muted-foreground mb-6">
+                      {t("Your account needs admin approval before you can scan and redeem gifts.")}
+                    </p>
+                    
+                    <Button 
+                      variant="default" 
+                      className="flex items-center gap-2"
+                      onClick={() => requestOwnerRole()}
+                    >
+                      {t("Request Approval")}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        
+        <Footer />
+      </div>
+    );
+  }
+  
+  // If admin validated but role is turned off
+  if (!userRoles.isCoffeePointOwner) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        
+        <main className="flex-grow">
+          <section className="py-16">
+            <div className="container mx-auto px-4">
+              <div className="max-w-md mx-auto">
+                <Alert className="mb-6">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertTitle>{t("Role Not Enabled")}</AlertTitle>
+                  <AlertDescription>
+                    {t("You have been approved, but your Coffee Point Owner role is currently disabled.")}
+                  </AlertDescription>
+                </Alert>
+                
+                <div className="text-center space-y-6">
+                  <div className="bg-muted p-8 rounded-lg inline-block mx-auto">
+                    <Coffee className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                    <h2 className="text-xl font-medium mb-2">{t("Enable Owner Role")}</h2>
+                    <p className="text-muted-foreground mb-6">
+                      {t("Go to your profile settings to enable the Coffee Point Owner role.")}
                     </p>
                     
                     <Sheet>
@@ -93,8 +196,8 @@ const ScanQR = () => {
                             </div>
                             <Switch 
                               id="gift-creator-role"
-                              checked={userRoles.isGiftCreator}
-                              onCheckedChange={() => toggleRole("isGiftCreator")}
+                              checked={true}
+                              disabled={true}
                             />
                           </div>
                           
@@ -125,6 +228,12 @@ const ScanQR = () => {
                         </div>
                       </SheetContent>
                     </Sheet>
+                    
+                    <div className="mt-4">
+                      <Link to="/profile-settings">
+                        <Button variant="outline">{t("Go to Profile Settings")}</Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -137,6 +246,7 @@ const ScanQR = () => {
     );
   }
   
+  // If all requirements are met, show the scanner
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
