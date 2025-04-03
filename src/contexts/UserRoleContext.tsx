@@ -37,8 +37,14 @@ export const UserRoleProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const updateUserRoles = (roles: UserRole) => {
-    setUserRoles(roles);
-    localStorage.setItem('userRolePreferences', JSON.stringify(roles));
+    // Ensure at least one role is enabled
+    const validatedRoles = {
+      ...roles,
+      isGiftCreator: roles.isGiftCreator || (!roles.isGiftCreator && !roles.isCoffeePointOwner) ? true : roles.isGiftCreator,
+    };
+    
+    setUserRoles(validatedRoles);
+    localStorage.setItem('userRolePreferences', JSON.stringify(validatedRoles));
   };
 
   return (
