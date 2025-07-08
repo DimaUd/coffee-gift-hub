@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import GiftCreator from "./pages/GiftCreator";
 import CoffeeMap from "./pages/CoffeeMap";
 import MyQRCodes from "./pages/MyQRCodes";
+import GiftAnalytics from "./pages/GiftAnalytics";
 import AddCoffeePoint from "./pages/AddCoffeePoint";
 import Promotions from "./pages/Promotions";
 import BusinessPromotion from "./pages/BusinessPromotion";
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/gift-creator" element={<GiftCreator />} />
             <Route path="/coffee-map" element={<CoffeeMap />} />
             <Route path="/my-qr-codes" element={<MyQRCodes />} />
+            <Route path="/gift-analytics" element={<GiftAnalytics />} />
             <Route path="/add-coffee-point" element={<AddCoffeePoint />} />
             <Route path="/promotions" element={<Promotions />} />
             <Route path="/business-promotion" element={<BusinessPromotion />} />

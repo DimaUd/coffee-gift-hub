@@ -32,6 +32,7 @@ const Header = () => {
     { name: translate('Get Gift'), path: '/gift-creator' },
     { name: translate('Coffee Map'), path: '/coffee-map' },
     { name: translate('My QR Codes'), path: '/my-qr-codes' },
+    { name: 'Gift Analytics', path: '/gift-analytics' },
     { 
       name: translate('For Businesses'), 
       path: '#',

@@ -14,6 +14,7 @@ const Footer = () => {
         { name: "Get Gift", path: "/gift-creator" },
         { name: "Coffee Map", path: "/coffee-map" },
         { name: "My QR Codes", path: "/my-qr-codes" },
+        { name: "Gift Analytics", path: "/gift-analytics" },
         { name: "For Businesses", path: "/add-coffee-point" },
       ]
     },
